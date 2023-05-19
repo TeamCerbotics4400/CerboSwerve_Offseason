@@ -80,7 +80,7 @@ public final class Constants {
       turnReversed, encoderReversed, encoderOffset);
     }
 
-    public static final class Module4{
+    public static final class Module3{
       public static final int DRIVE_ID = 10;
       public static final int TURN_ID = 11;
       public static final int ENCODER_ID = 12;
@@ -105,11 +105,29 @@ public final class Constants {
       new Translation2d(kWheelBase / 2, kTrackWidth / 2),
       new Translation2d(-kWheelBase / 2, -kTrackWidth / 2),
       new Translation2d(-kWheelBase / 2, -kTrackWidth));
-      
+
     /*Free speed of each gearing:
     * 5.50 = 20.25 ft/s
     * 6.55 = 17.01 ft/s
     */
     public static final double kPhysicalMaxSpeedMetersPerSecond = Units.feetToMeters(20.25);
+  }
+
+  public static final class VisionConstants {
+
+    public static final String tapeLimelight = "limelight-tape";
+    public static final String tagLimelightName = "limelight-tags";
+
+    public static double HEIGHT_OF_HIGH_NODE = 0.90;//Altura del target
+    public static double HEIGHT_OF_MID_NODE = 0.60;
+    public static double HEIGHT_OF_TAG = 0.45;
+    public static double LIMELIGHT_FLOOR_CLEREANCE= 0.04819;//Altura de la limelight
+    public static double LIMELIGHT_VERTICAL_ANGLE = 0;
+
+    public static final int normalTracking_Pipeline = 0;
+    public static final int lowAlign_Pipeline = 1;
+    public static final int midAlign_Pipeline = 2;
+    public static final int highAlign_Pipeline = 3;
+
   }
 }

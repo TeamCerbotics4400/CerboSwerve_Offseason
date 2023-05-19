@@ -10,7 +10,9 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.AnalogEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
@@ -19,6 +21,8 @@ import team4400.Util.SwerveModuleConstants;
 
 /** Add your docs here. */
 public class SwerveModule {
+
+    public final int moduleNumber;
 
     private final CANSparkMax driveMotor;
     private final CANSparkMax turnMotor;
@@ -32,7 +36,9 @@ public class SwerveModule {
     private final boolean absoluteEncoderReversed;
     private final double absoluteEncoderOffsetRad;
     
-    public SwerveModule(SwerveModuleConstants moduleConstants){
+    public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants){
+
+        this.moduleNumber = moduleNumber;
 
         absoluteEncoderOffsetRad = moduleConstants.angleOffset;
         absoluteEncoderReversed = moduleConstants.absoluteEncoderReversed;
@@ -63,7 +69,7 @@ public class SwerveModule {
     }
 
     public double getTurningPosition(){
-        return turnEncoder.getPosition();
+        return Units.radiansToDegrees(turnEncoder.getPosition());
     }
 
     public double getDriveVelocity(){
@@ -102,6 +108,12 @@ public class SwerveModule {
 
         SmartDashboard.putString(
             "Swerve[" + thriftyEncoder.getChannel() + "] state", state.toString());
+    }
+
+    public SwerveModulePosition getPosition(){
+        return new SwerveModulePosition(
+            getDrivePosition(), 
+            Rotation2d.fromDegrees(getTurningPosition()));
     }
 
     public void stop(){

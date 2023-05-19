@@ -38,6 +38,27 @@ public final class Constants {
 
     //TODO: PLACEHOLDER VALUES
 
+    /*    
+     *                   F             
+     *   ┌───────┬─────────────────┬───────┐
+     *   │       │                 │       │
+     *   │ Mod 0 │                 │ Mod 1 │
+     *   │       │                 │       │
+     *   ├───────┘                 └───────┤
+     *   │                                 │
+     *   │            Modules              │
+     * L │            Diagram              │ R
+     *   │                                 │
+     *   │                                 │
+     *   │                                 │
+     *   ├───────┐                 ┌───────┤
+     *   │       │                 │       │
+     *   │ Mod 3 │                 │ Mod 2 │
+     *   │       │                 │       │
+     *   └───────┴─────────────────┴───────┘
+     *                   B
+     */
+
     public static final class Module0{
       public static final int DRIVE_ID = 1;
       public static final int TURN_ID = 2;

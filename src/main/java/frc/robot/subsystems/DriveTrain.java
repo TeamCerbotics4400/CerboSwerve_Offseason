@@ -13,9 +13,13 @@ import frc.robot.Constants.DriveConstants;
 
 public class DriveTrain extends SubsystemBase {
   private SwerveModule[] swerveModules = new SwerveModule[]{
+    //Left Front Module
     new SwerveModule(0, DriveConstants.Module0.CONSTANTS),
+    //Right Front Module
     new SwerveModule(1, DriveConstants.Module1.CONSTANTS),
+    //Back Right Module
     new SwerveModule(2, DriveConstants.Module2.CONSTANTS),
+    //Back Left Module
     new SwerveModule(3, DriveConstants.Module3.CONSTANTS)
   };
 

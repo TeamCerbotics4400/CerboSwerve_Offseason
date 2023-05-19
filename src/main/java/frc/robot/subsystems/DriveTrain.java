@@ -28,7 +28,7 @@ public class DriveTrain extends SubsystemBase {
 
   /** Creates a new DriveTrain. */
   public DriveTrain() {
-
+    zeroHeading();
   }
 
   @Override

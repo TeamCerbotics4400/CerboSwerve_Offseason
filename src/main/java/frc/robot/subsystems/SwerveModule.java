@@ -4,16 +4,17 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.AnalogEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ModuleConstants;
@@ -32,7 +33,7 @@ public class SwerveModule {
 
     private final PIDController turnController;
 
-    private final AnalogEncoder thriftyEncoder;
+    private final AbsoluteEncoder thriftyEncoder;
     private final boolean absoluteEncoderReversed;
     private final double absoluteEncoderOffsetRad;
     
@@ -40,12 +41,16 @@ public class SwerveModule {
 
         this.moduleNumber = moduleNumber;
 
-        absoluteEncoderOffsetRad = moduleConstants.angleOffset;
-        absoluteEncoderReversed = moduleConstants.absoluteEncoderReversed;
-        thriftyEncoder = new AnalogEncoder(moduleConstants.absoluteEncoderId);
-
         driveMotor = new CANSparkMax(moduleConstants.driveMotorID, MotorType.kBrushless);
         turnMotor = new CANSparkMax(moduleConstants.turnMotorID, MotorType.kBrushless);
+
+        absoluteEncoderOffsetRad = moduleConstants.angleOffset;
+        absoluteEncoderReversed = moduleConstants.absoluteEncoderReversed;
+        //Check to what Motor Controller the encoder is going to be connected to.
+        thriftyEncoder = driveMotor.getAbsoluteEncoder(Type.kDutyCycle);
+
+        driveMotor.restoreFactoryDefaults();
+        turnMotor.restoreFactoryDefaults();
 
         driveMotor.setInverted(moduleConstants.driveReversed);
         turnMotor.setInverted(moduleConstants.turnReversed);
@@ -81,7 +86,7 @@ public class SwerveModule {
     }
 
     public double getAbsoluteEncoderRad(){
-        double angle = thriftyEncoder.getAbsolutePosition();
+        double angle = thriftyEncoder.getPosition();
         angle *= 2.0 * Math.PI;
         angle -= absoluteEncoderOffsetRad;
         return angle * (absoluteEncoderReversed ? -1.0 : 1.0);
@@ -107,7 +112,7 @@ public class SwerveModule {
         turnMotor.set(turnController.calculate(getTurningPosition(), state.angle.getRadians()));
 
         SmartDashboard.putString(
-            "Swerve[" + thriftyEncoder.getChannel() + "] state", state.toString());
+            "Swerve[" + moduleNumber + "] state", state.toString());
     }
 
     public SwerveModulePosition getPosition(){

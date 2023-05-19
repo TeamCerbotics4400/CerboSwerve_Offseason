@@ -5,6 +5,7 @@
 package team4400.Util;
 
 /** Add your docs here. */
+/* Special class for helping us organize Swerve Module Constants */
 public class SwerveModuleConstants {
     public final int driveMotorID;
     public final int turnMotorID;

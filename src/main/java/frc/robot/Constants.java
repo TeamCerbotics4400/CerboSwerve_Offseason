@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import team4400.Util.SwerveModuleConstants;
 
@@ -31,10 +33,11 @@ public final class Constants {
   public static final class DriveConstants{
     /* Specific module constants from FRC 95:
      * https://github.com/first95/FRC2023/blob/f0e881c39ade544b3b71936995f7f075105f0b93/Clarke/src/main/java/frc/robot/Constants.java#LL136C16-L136C23
-     * Gives us a tool of a cleaner and readable swerve code
+     * Gives us a tool for a cleaner and readable swerve code
     */
 
     //TODO: PLACEHOLDER VALUES
+
     public static final class Module0{
       public static final int DRIVE_ID = 1;
       public static final int TURN_ID = 2;
@@ -91,6 +94,18 @@ public final class Constants {
       turnReversed, encoderReversed, encoderOffset);
     }
 
+    public static final int IMU_ID = 13;
+
+    //Distance between left and right wheels;
+    public static final double kTrackWidth = 0.504;
+    //Distance between front and back wheels;
+    public static final double kWheelBase = 0.932;
+    public static final SwerveDriveKinematics kSwerveKinematics = new SwerveDriveKinematics(
+      new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
+      new Translation2d(kWheelBase / 2, kTrackWidth / 2),
+      new Translation2d(-kWheelBase / 2, -kTrackWidth / 2),
+      new Translation2d(-kWheelBase / 2, -kTrackWidth));
+      
     /*Free speed of each gearing:
     * 5.50 = 20.25 ft/s
     * 6.55 = 17.01 ft/s

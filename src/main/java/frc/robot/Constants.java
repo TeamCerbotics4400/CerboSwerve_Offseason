@@ -132,6 +132,13 @@ public final class Constants {
     * 6.55 = 17.01 ft/s
     */
     public static final double kPhysicalMaxSpeedMetersPerSecond = Units.feetToMeters(20.25);
+    public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
+
+    public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond / 4;
+        public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = //
+                kPhysicalMaxAngularSpeedRadiansPerSecond / 4;
+        public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3;
+        public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
   }
 
   public static final class VisionConstants {
@@ -150,5 +157,9 @@ public final class Constants {
     public static final int midAlign_Pipeline = 2;
     public static final int highAlign_Pipeline = 3;
 
+  }
+
+  public static final class IOConstants{
+    public static final double kDeadband = 0.05;
   }
 }

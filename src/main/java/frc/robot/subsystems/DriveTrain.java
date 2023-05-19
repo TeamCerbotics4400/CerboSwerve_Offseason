@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.sensors.Pigeon2;
 
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -46,6 +47,21 @@ public class DriveTrain extends SubsystemBase {
   public void resetModuleEncoders(){
     for(SwerveModule mod : swerveModules){
       mod.resetEncoders();
+    }
+  }
+
+  public void stopModules(){
+    for(SwerveModule mod : swerveModules){
+      mod.stop();
+    }
+  }
+
+  public void setModuleStates(SwerveModuleState[] desiredStates){
+    SwerveDriveKinematics.desaturateWheelSpeeds(
+      desiredStates, 
+      DriveConstants.kPhysicalMaxSpeedMetersPerSecond);
+    for(SwerveModule mod : swerveModules){
+      mod.setDesiredState(desiredStates[mod.moduleNumber]);
     }
   }
 

@@ -22,10 +22,11 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.VisionConstants;
 
 /** Add your docs here. */
-//TODO: Vision Deviations and tolerances based from the 2023 FRC game Charged Up
+//TODO: Vision deviations and tolerances based from the 2023 FRC game Charged Up
 public class VisionSystem {
     private final DriveTrain m_drive;
 
+    //Hopefully we can fine tune it completely to not use wheel odometry at all
     private final SwerveDrivePoseEstimator odometry;
 
     Alliance alliance = Alliance.Invalid;

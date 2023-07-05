@@ -46,6 +46,7 @@ public class SwerveModule {
 
         absoluteEncoderOffsetRad = moduleConstants.angleOffset;
         absoluteEncoderReversed = moduleConstants.absoluteEncoderReversed;
+        
         //Check to what Motor Controller the encoder is going to be connected to.
         thriftyEncoder = driveMotor.getAbsoluteEncoder(Type.kDutyCycle);
 

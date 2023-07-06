@@ -7,8 +7,12 @@ package frc.robot;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxAnalogSensor;
+import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
+import com.revrobotics.SparkMaxAnalogSensor.Mode;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -30,6 +34,9 @@ public class SwerveModule {
 
     private final RelativeEncoder driveEncoder;
     private final RelativeEncoder turnEncoder;
+
+    private final SparkMaxPIDController turnSparkController;
+    private final SparkMaxAnalogSensor thriftEncoder;
 
     private final PIDController turnController;
 
@@ -66,6 +73,12 @@ public class SwerveModule {
 
         turnController = new PIDController(ModuleConstants.kPTurning, 0, 0);
         turnController.enableContinuousInput(-Math.PI, Math.PI);
+
+        turnSparkController = turnMotor.getPIDController();
+        thriftEncoder = turnMotor.getAnalog(Mode.kAbsolute);
+
+        thriftEncoder.setPositionConversionFactor(108.10);//1231.8796992481 / (4096 * 360));
+        turnSparkController.setOutputRange(-0.5, 0.5);
 
         resetEncoders();
     }
@@ -125,5 +138,20 @@ public class SwerveModule {
     public void stop(){
         driveMotor.set(0);
         turnMotor.set(0);
+    }
+
+    public double getAnalogSensorPos(){
+        return thriftEncoder.getPosition();
+    }
+
+    public void setTurnMotorAngle(double angle){
+        turnSparkController.setFeedbackDevice(thriftEncoder);
+        turnSparkController.setP(0.0005);
+        turnSparkController.setFF(0.001);
+        turnSparkController.setReference(angle, ControlType.kPosition);
+    }
+
+    public void setTurnMotorPower(double power){
+        turnMotor.set(power);
     }
 }

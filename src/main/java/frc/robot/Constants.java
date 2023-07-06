@@ -61,7 +61,7 @@ public final class Constants {
 
     public static final class Module0{
       public static final int DRIVE_ID = 1;
-      public static final int TURN_ID = 2;
+      public static final int TURN_ID = 62;
       public static final int ENCODER_ID = 3;
       public static final boolean driveReversed = false;
       public static final boolean turnReversed = false;

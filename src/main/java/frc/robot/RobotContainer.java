@@ -7,11 +7,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.GoToAngle;
-import frc.robot.commands.StickRotationControl;
-//import frc.robot.commands.TeleopControl;
+import frc.robot.commands.TeleopControl;
 import frc.robot.subsystems.DriveTrain;
 
 /**
@@ -41,7 +38,13 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    m_drive.setDefaultCommand(new StickRotationControl(m_drive, driverJoystick));
+    m_drive.setDefaultCommand(new TeleopControl
+    (m_drive, 
+    () -> driverJoystick.getRawAxis(1), 
+    () -> driverJoystick.getRawAxis(2), 
+    () -> driverJoystick.getRawAxis(3), 
+    () -> driverJoystick.getRawButton(4)));
+    //m_drive.setDefaultCommand(new StickRotationControl(m_drive, driverJoystick));
     //new JoystickButton(driverJoystick, 1).onTrue(new GoToAngle(m_drive));
   }
 

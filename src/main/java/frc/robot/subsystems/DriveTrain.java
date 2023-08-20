@@ -6,13 +6,9 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.sensors.Pigeon2;
 
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.SwerveModule;
@@ -23,22 +19,22 @@ public class DriveTrain extends SubsystemBase {
     //Left Front Module
     new SwerveModule(0, DriveConstants.Module0.CONSTANTS),
     //Right Front Module
-    //new SwerveModule(1, DriveConstants.Module1.CONSTANTS),
+    new SwerveModule(1, DriveConstants.Module1.CONSTANTS),
     //Back Right Module
-    //new SwerveModule(2, DriveConstants.Module2.CONSTANTS),
+    new SwerveModule(2, DriveConstants.Module2.CONSTANTS),
     //Back Left Module
-    //new SwerveModule(3, DriveConstants.Module3.CONSTANTS)
+    new SwerveModule(3, DriveConstants.Module3.CONSTANTS)
 
     
   };
 
   double currentAzimuth = 45;
 
-  //private final Pigeon2 imu = new Pigeon2(DriveConstants.IMU_ID);
+  private final Pigeon2 imu = new Pigeon2(DriveConstants.IMU_ID);
 
   /** Creates a new DriveTrain. */
   public DriveTrain() {
-    //zeroHeading();
+    zeroHeading();
     SmartDashboard.putNumber("Current Azimuth", currentAzimuth);
   }
 
@@ -57,13 +53,14 @@ public class DriveTrain extends SubsystemBase {
     }
   }
 
-  /*public void zeroHeading(){
+  public void zeroHeading(){
     imu.setYaw(0);
-  }*/
+  }
 
-  /*public double getHeading(){
+  public double getHeading(){
     return Math.IEEEremainder(imu.getYaw(), 360);
-  }*/
+  }
+
   public void resetModuleEncoders(){
     for(SwerveModule mod : swerveModules){
       mod.resetEncoders();

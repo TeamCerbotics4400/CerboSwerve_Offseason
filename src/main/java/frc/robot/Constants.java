@@ -17,6 +17,9 @@ import team4400.Util.SwerveModuleConstants;
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
+
+ /*************** DRIVE ****************/
+
 public final class Constants {
   public static final class ModuleConstants{
     public static final double kWheelDiameterMeters = Units.inchesToMeters(4);
@@ -141,21 +144,93 @@ public final class Constants {
         public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
   }
 
+  /*************** SUPERSTRUCTURE ****************/
+
+  public static final class ShooterConstants {
+    public static final byte LEFT_FLYWHEEL_ID = 14; 
+    public static final byte RIGHT_FLYWHEEL_ID = 15;
+    public static final byte HORIZONTAL_FLYWHEEL_ID = 16;
+
+    public static double kP= 0.087,
+                        kI = 0.0,
+                        kD = 0.95,
+                        kIz = 0,
+                        kFF = 0.0495,
+                        hKp = 0.00004,
+                        hKd = 0.0,
+                        hKff = 0.000205;
+
+    public static final double shooterTreshold = 300;
+
+  }
+
+  public static final class ArmConstants {
+    public static byte LEFT_ARM_ID = 17; 
+    public static byte RIGHT_ARM_ID = 18;
+
+    public static double ARM_DEGREES_PER_MOTOR_ROTATION = 32.89;
+
+    public static double kP = 0.13821,//0.0011773,//0.012904,//4.3755E-09,
+                         kI = 0.0,
+                         kD = 0.021835,//0.00017643,//0.0024401,//8.274E-10,
+                         kFF = 0.0,//0.000156,
+                         kMaxVelocityRadPerSecond = 320,
+                         kMaxAccelerationMetersPerSecondSquared = 250,//320,
+                         kS = 0.94615,//0.82172,
+                         kV = 0.0021715,//0.0047927,
+                         kA = 0.0019641,//0.003212,
+                         kG = 0.12588;//0.44033;
+
+    public static double IDLE_POSITION = 90.0,
+                         SUBSTATION_POSITION = 130.5,
+                         SCORING_POSITION = 100,//115;
+                         BACK_FLOOR_POSITION = 1.15,
+                         FRONT_FLOOR_POSITION = 175.0,
+                         AVE_MARIA_SHOOT_POSITION = 120.0,
+                         COUNTER_BALANCE_POSITION = 60.0,
+                         TESTING_ANGLE = 90.0;
+
+    public static double ARM_THRESHOLD = 9.5;
+  }
+
+  public static final class WristConstants {
+    public static byte WRIST_ID = 19; 
+
+    public static double kP = 0.18221,
+                         kI = 0.0,
+                         kD = 0.0151835,
+                         kFF = 0.0,
+                         kMaxVelocityRadPerSecond = 440,
+                         kMaxAccelerationMetersPerSecondSquared = 440,
+                         kS = 0.46147,
+                         kV = 0.020646,
+                         kA = 0.008245,
+                         kG = 0.45406;
+
+    public static double LEFT_POSITION = 90.0,
+                         IDLE_POSITION = 0.0,
+                         RIGHT_POSITION = -95.0;
+
+    public static double WRIST_THRESHOLD = 4;
+  }
+
+  /*************** MISC ****************/
+
   public static final class VisionConstants {
 
     public static final String tapeLimelight = "limelight-tape";
     public static final String tagLimelightName = "limelight-tags";
 
-    public static double HEIGHT_OF_HIGH_NODE = 0.90;//Altura del target
+    public static double HEIGHT_OF_HIGH_NODE = 0.90; //Elevation of Target
     public static double HEIGHT_OF_MID_NODE = 0.60;
     public static double HEIGHT_OF_TAG = 0.45;
-    public static double LIMELIGHT_FLOOR_CLEREANCE= 0.04819;//Altura de la limelight
+    public static double LIMELIGHT_FLOOR_CLEREANCE= 0.04819; //Elevation of the Limelight
     public static double LIMELIGHT_VERTICAL_ANGLE = 0;
 
-    public static final int normalTracking_Pipeline = 0;
-    public static final int lowAlign_Pipeline = 1;
-    public static final int midAlign_Pipeline = 2;
-    public static final int highAlign_Pipeline = 3;
+    public static final int normalTracking_Pipeline = 0,
+                            lowAlign_Pipeline = 1,
+                            midAlign_Pipeline = 2,
+                            highAlign_Pipeline = 3;
 
   }
 

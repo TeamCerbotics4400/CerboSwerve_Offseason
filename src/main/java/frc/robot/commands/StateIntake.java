@@ -62,7 +62,6 @@ public class StateIntake extends CommandBase {
       case "INTAKING":
       m_shooter.leftSetpoint(-6000);
       m_shooter.rightSetpoint(-6000);
-      m_shooter.horizontalSetpoint(-6000);
        //m_shooter.setMotorsPower(-1, -1);
       break;
 

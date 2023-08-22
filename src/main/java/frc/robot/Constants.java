@@ -20,11 +20,17 @@ import team4400.Util.SwerveModuleConstants;
 
  /*************** DRIVE ****************/
 
+ /*
+ * Two options: 5.50 or 6.55
+ * All of this data available in
+ * https://docs.wcproducts.com/wcp-swervex/general-info/ratio-options
+ */
+
 public final class Constants {
   public static final class ModuleConstants{
     public static final double kWheelDiameterMeters = Units.inchesToMeters(4);
-    public static final double kDriveMotorGearRatio = 18.01; //Two options: 5.50 or 6.55
-    public static final double kTurningMotorGearRatio = 10.29;
+    public static final double kDriveMotorGearRatio = 5.50; //Drive Gear Ratio, 5.50 or 6.55
+    public static final double kTurningMotorGearRatio = 10.29; //Turning Gear Ratio
     public static final double kDriveEncoderRot2Meter = 
                                 kDriveMotorGearRatio * Math.PI * kWheelDiameterMeters;
     public static final double kTurningEncoderRot2Rad = kTurningMotorGearRatio * 2 * Math.PI;
@@ -63,8 +69,8 @@ public final class Constants {
      */
 
     public static final class Module0{
-      public static final int DRIVE_ID = 1;
-      public static final int TURN_ID = 62;
+      public static final int DRIVE_ID = 16;
+      public static final int TURN_ID = 17;
       public static final int ENCODER_ID = 3;
       public static final boolean driveReversed = false;
       public static final boolean turnReversed = false;
@@ -78,7 +84,7 @@ public final class Constants {
 
     public static final class Module1{
       public static final int DRIVE_ID = 4;
-      public static final int TURN_ID = 5;
+      public static final int TURN_ID = 3;
       public static final int ENCODER_ID = 6;
       public static final boolean driveReversed = false;
       public static final boolean turnReversed = false;
@@ -91,8 +97,8 @@ public final class Constants {
     }
 
     public static final class Module2{
-      public static final int DRIVE_ID = 7;
-      public static final int TURN_ID = 8;
+      public static final int DRIVE_ID = 2;
+      public static final int TURN_ID = 1;
       public static final int ENCODER_ID = 9;
       public static final boolean driveReversed = false;
       public static final boolean turnReversed = false;
@@ -105,8 +111,8 @@ public final class Constants {
     }
 
     public static final class Module3{
-      public static final int DRIVE_ID = 10;
-      public static final int TURN_ID = 11;
+      public static final int DRIVE_ID = 19;
+      public static final int TURN_ID = 18;
       public static final int ENCODER_ID = 12;
       public static final boolean driveReversed = false;
       public static final boolean turnReversed = false;
@@ -120,10 +126,10 @@ public final class Constants {
 
     public static final int IMU_ID = 13;
 
-    //Distance between left and right wheels;
-    public static final double kTrackWidth = 0.504;
-    //Distance between front and back wheels;
-    public static final double kWheelBase = 0.932;
+    //Distance between left and right wheels
+    public static final double kTrackWidth = 0.58;
+    //Distance between front and back wheels
+    public static final double kWheelBase = 0.66;
     public static final SwerveDriveKinematics kSwerveKinematics = new SwerveDriveKinematics(
       new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
       new Translation2d(kWheelBase / 2, kTrackWidth / 2),
@@ -147,26 +153,22 @@ public final class Constants {
   /*************** SUPERSTRUCTURE ****************/
 
   public static final class ShooterConstants {
-    public static final byte LEFT_FLYWHEEL_ID = 14; 
-    public static final byte RIGHT_FLYWHEEL_ID = 15;
-    public static final byte HORIZONTAL_FLYWHEEL_ID = 16;
+    public static final byte LEFT_FLYWHEEL_ID = 6; 
+    public static final byte RIGHT_FLYWHEEL_ID = 15; //Pending
 
     public static double kP= 0.087,
                         kI = 0.0,
                         kD = 0.95,
                         kIz = 0,
-                        kFF = 0.0495,
-                        hKp = 0.00004,
-                        hKd = 0.0,
-                        hKff = 0.000205;
+                        kFF = 0.0495;
 
     public static final double shooterTreshold = 300;
 
   }
 
   public static final class ArmConstants {
-    public static byte LEFT_ARM_ID = 17; 
-    public static byte RIGHT_ARM_ID = 18;
+    public static byte LEFT_ARM_ID = 10; 
+    public static byte RIGHT_ARM_ID = 9;
 
     public static double ARM_DEGREES_PER_MOTOR_ROTATION = 32.89;
 
@@ -194,7 +196,7 @@ public final class Constants {
   }
 
   public static final class WristConstants {
-    public static byte WRIST_ID = 19; 
+    public static byte WRIST_ID = 19; //Pending
 
     public static double kP = 0.18221,
                          kI = 0.0,

@@ -99,7 +99,6 @@ public class StateShooterCommand extends CommandBase {
       case "Low":
             m_shooter.leftSetpoint(650);
             m_shooter.rightSetpoint(650);
-            m_shooter.horizontalSetpoint(650);
         break;
   
         case "Mid":
@@ -109,7 +108,6 @@ public class StateShooterCommand extends CommandBase {
             m_shooter.horizontalSetpoint(1200);*/
             m_shooter.leftSetpoint(m_shooter.getSpeedForDistanceFalconMid(targetDistance));
             m_shooter.rightSetpoint(m_shooter.getSpeedForDistanceFalconMid(targetDistance));
-            m_shooter.horizontalSetpoint(m_shooter.getSpeedForDistanceNeoMid(targetDistance));
         break;
   
         case "High":
@@ -120,13 +118,11 @@ public class StateShooterCommand extends CommandBase {
 
           m_shooter.leftSetpoint(m_shooter.getSpeedForDistanceFalconHigh(targetDistance));
           m_shooter.rightSetpoint(m_shooter.getSpeedForDistanceFalconHigh(targetDistance));
-          m_shooter.horizontalSetpoint(m_shooter.getSpeedForDistanceNeoHigh(targetDistance));
         break;
   
         case "Ave Maria":
           m_shooter.leftSetpoint(1200);
           m_shooter.rightSetpoint(1200);
-          m_shooter.horizontalSetpoint(1200);
         break;
     }
   }

@@ -4,23 +4,17 @@
 
 package frc.robot.subsystems;
 
-import java.util.function.Supplier;
-
 import com.ctre.phoenix.sensors.Pigeon2;
 import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.commands.PPRamseteCommand;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-  import edu.wpi.first.wpilibj2.command.Command;
-  import edu.wpi.first.wpilibj2.command.InstantCommand;
-  import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-  import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.SwerveModule;
 import frc.robot.Constants.DriveConstants;
 
@@ -113,7 +107,6 @@ public class DriveTrain extends SubsystemBase {
   }
 
   //DEBUG
-
   public void setModuleAngle(){
     swerveModules[0].setTurnMotorAngle(currentAzimuth);
   }

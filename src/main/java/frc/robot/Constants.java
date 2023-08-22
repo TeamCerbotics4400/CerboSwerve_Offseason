@@ -71,56 +71,52 @@ public final class Constants {
     public static final class Module0{
       public static final int DRIVE_ID = 16;
       public static final int TURN_ID = 17;
-      public static final int ENCODER_ID = 3;
       public static final boolean driveReversed = false;
       public static final boolean turnReversed = false;
       public static final boolean encoderReversed = false;
       public static double encoderOffset = 0.0;
 
       public static final SwerveModuleConstants CONSTANTS = 
-      new SwerveModuleConstants(DRIVE_ID, TURN_ID, ENCODER_ID, driveReversed, 
+      new SwerveModuleConstants(DRIVE_ID, TURN_ID, driveReversed, 
       turnReversed, encoderReversed, encoderOffset);
     }
 
     public static final class Module1{
       public static final int DRIVE_ID = 4;
       public static final int TURN_ID = 3;
-      public static final int ENCODER_ID = 6;
       public static final boolean driveReversed = false;
       public static final boolean turnReversed = false;
       public static final boolean encoderReversed = false;
       public static double encoderOffset = 0.0;
 
       public static final SwerveModuleConstants CONSTANTS = 
-      new SwerveModuleConstants(DRIVE_ID, TURN_ID, ENCODER_ID, driveReversed, 
+      new SwerveModuleConstants(DRIVE_ID, TURN_ID, driveReversed, 
       turnReversed, encoderReversed, encoderOffset);
     }
 
     public static final class Module2{
       public static final int DRIVE_ID = 2;
       public static final int TURN_ID = 1;
-      public static final int ENCODER_ID = 9;
       public static final boolean driveReversed = false;
       public static final boolean turnReversed = false;
       public static final boolean encoderReversed = false;
       public static double encoderOffset = 0.0;
 
       public static final SwerveModuleConstants CONSTANTS = 
-      new SwerveModuleConstants(DRIVE_ID, TURN_ID, ENCODER_ID, driveReversed, 
+      new SwerveModuleConstants(DRIVE_ID, TURN_ID, driveReversed, 
       turnReversed, encoderReversed, encoderOffset);
     }
 
     public static final class Module3{
       public static final int DRIVE_ID = 19;
       public static final int TURN_ID = 18;
-      public static final int ENCODER_ID = 12;
       public static final boolean driveReversed = false;
       public static final boolean turnReversed = false;
       public static final boolean encoderReversed = false;
       public static double encoderOffset = 0.0;
 
       public static final SwerveModuleConstants CONSTANTS = 
-      new SwerveModuleConstants(DRIVE_ID, TURN_ID, ENCODER_ID, driveReversed, 
+      new SwerveModuleConstants(DRIVE_ID, TURN_ID, driveReversed, 
       turnReversed, encoderReversed, encoderOffset);
     }
 
@@ -144,7 +140,7 @@ public final class Constants {
     public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
 
     public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond / 4;
-        public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = //
+        public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = 
                 kPhysicalMaxAngularSpeedRadiansPerSecond / 4;
         public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3;
         public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
@@ -156,9 +152,9 @@ public final class Constants {
     public static final byte LEFT_FLYWHEEL_ID = 6; 
     public static final byte RIGHT_FLYWHEEL_ID = 15; //Pending
 
-    public static double kP= 0.087,
+    public static double kP= 0.078061,//0.087,
                         kI = 0.0,
-                        kD = 0.95,
+                        kD = 0.0,//0.95,
                         kIz = 0,
                         kFF = 0.0495;
 

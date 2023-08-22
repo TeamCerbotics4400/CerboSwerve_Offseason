@@ -9,18 +9,16 @@ package team4400.Util;
 public class SwerveModuleConstants {
     public final int driveMotorID;
     public final int turnMotorID;
-    public final int absoluteEncoderId;
     public final boolean driveReversed;
     public final boolean turnReversed;
     public final boolean absoluteEncoderReversed;
     public final double angleOffset;
 
-    public SwerveModuleConstants(int driveMotorID, int turnMotorID, int absoluteEncoderId,
+    public SwerveModuleConstants(int driveMotorID, int turnMotorID,
     boolean driveReversed, boolean turnReversed, boolean absoluteEncoderReversed, 
     double angleOffset) {
         this.driveMotorID = driveMotorID;
         this.turnMotorID = turnMotorID;
-        this.absoluteEncoderId = absoluteEncoderId;
         this.driveReversed = driveReversed;
         this.turnReversed = turnReversed;
         this.absoluteEncoderReversed = absoluteEncoderReversed;

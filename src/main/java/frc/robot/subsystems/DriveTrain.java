@@ -4,12 +4,22 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.sensors.Pigeon2;
+import java.util.function.Supplier;
 
+import com.ctre.phoenix.sensors.Pigeon2;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.PPRamseteCommand;
+import com.pathplanner.lib.commands.PPSwerveControllerCommand;
+
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.SwerveModule;
 import frc.robot.Constants.DriveConstants;
@@ -24,13 +34,17 @@ public class DriveTrain extends SubsystemBase {
     new SwerveModule(2, DriveConstants.Module2.CONSTANTS),
     //Back Left Module
     new SwerveModule(3, DriveConstants.Module3.CONSTANTS)
-
-    
   };
+
+  private VisionSystem m_vision = new VisionSystem(this);
 
   double currentAzimuth = 45;
 
   private final Pigeon2 imu = new Pigeon2(DriveConstants.IMU_ID);
+
+  private final PIDController xPID = new PIDController(0, 0, 0);
+  private final PIDController yPID = new PIDController(0, 0, 0);
+  private final PIDController rotationPID = new PIDController(0, 0, 0);
 
   /** Creates a new DriveTrain. */
   public DriveTrain() {
@@ -98,6 +112,8 @@ public class DriveTrain extends SubsystemBase {
     return positions;
   }
 
+  //DEBUG
+
   public void setModuleAngle(){
     swerveModules[0].setTurnMotorAngle(currentAzimuth);
   }
@@ -105,4 +121,21 @@ public class DriveTrain extends SubsystemBase {
   public void setTestMotorPower(double power){
     swerveModules[0].setTurnMotorPower(power);
   }
+
+  //AUTO RAMSETE
+
+  /*public Command followTrajectoryCommand(PathPlannerTrajectory trajectory){
+    PPSwerveControllerCommand ramseteCommand = new PPSwerveControllerCommand(
+      trajectory, 
+     null,
+     xPID,
+     yPID, 
+     rotationPID, 
+     thisetModuleStates, 
+     this);
+
+    //Estoy cansado jefe
+
+      return ramseteCommand;
+  }*/
 }

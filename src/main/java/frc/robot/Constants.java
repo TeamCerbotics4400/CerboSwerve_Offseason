@@ -163,8 +163,8 @@ public final class Constants {
   }
 
   public static final class ArmConstants {
-    public static byte LEFT_ARM_ID = 7; 
-    public static byte RIGHT_ARM_ID = 8;
+    public static byte LEFT_ARM_ID = 8; 
+    public static byte RIGHT_ARM_ID = 7;
 
     public static double ARM_DEGREES_PER_MOTOR_ROTATION = 32.89;
 
@@ -192,7 +192,7 @@ public final class Constants {
   }
 
   public static final class WristConstants {
-    public static byte WRIST_ID = 5; 
+    public static byte WRIST_ID = 9; 
 
     public static double kP = 0.18221,
                          kI = 0.0,

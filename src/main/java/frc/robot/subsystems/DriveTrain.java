@@ -30,11 +30,11 @@ public class DriveTrain extends SubsystemBase {
     new SwerveModule(3, DriveConstants.Module3.CONSTANTS)
   };
 
+  private final Pigeon2 imu = new Pigeon2(DriveConstants.IMU_ID);
+
   private VisionSystem m_vision = new VisionSystem(this);
 
   double currentAzimuth = 45;
-
-  private final Pigeon2 imu = new Pigeon2(DriveConstants.IMU_ID);
 
   private final PIDController xPID = new PIDController(0, 0, 0);
   private final PIDController yPID = new PIDController(0, 0, 0);

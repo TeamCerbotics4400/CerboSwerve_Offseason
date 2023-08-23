@@ -150,7 +150,7 @@ public final class Constants {
 
   public static final class ShooterConstants {
     public static final byte LEFT_FLYWHEEL_ID = 6; 
-    public static final byte RIGHT_FLYWHEEL_ID = 15; //Pending
+    public static final byte RIGHT_FLYWHEEL_ID = 5; //Pending
 
     public static double kP= 0.078061,//0.087,
                         kI = 0.0,
@@ -163,8 +163,8 @@ public final class Constants {
   }
 
   public static final class ArmConstants {
-    public static byte LEFT_ARM_ID = 10; 
-    public static byte RIGHT_ARM_ID = 9;
+    public static byte LEFT_ARM_ID = 7; 
+    public static byte RIGHT_ARM_ID = 8;
 
     public static double ARM_DEGREES_PER_MOTOR_ROTATION = 32.89;
 
@@ -192,7 +192,7 @@ public final class Constants {
   }
 
   public static final class WristConstants {
-    public static byte WRIST_ID = 19; //Pending
+    public static byte WRIST_ID = 5; 
 
     public static double kP = 0.18221,
                          kI = 0.0,

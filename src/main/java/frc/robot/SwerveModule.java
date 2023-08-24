@@ -19,6 +19,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ModuleConstants;
@@ -40,7 +41,6 @@ public class SwerveModule {
 
     private final PIDController turnController;
 
-    private final AbsoluteEncoder thriftyEncoder;
     private final boolean absoluteEncoderReversed;
     private final double absoluteEncoderOffsetRad;
     
@@ -55,7 +55,6 @@ public class SwerveModule {
         absoluteEncoderReversed = moduleConstants.absoluteEncoderReversed;
         
         //Check to what Motor Controller the encoder is going to be connected to.
-        thriftyEncoder = driveMotor.getAbsoluteEncoder(Type.kDutyCycle);
 
         driveMotor.restoreFactoryDefaults();
         turnMotor.restoreFactoryDefaults();
@@ -100,7 +99,7 @@ public class SwerveModule {
     }
 
     public double getAbsoluteEncoderRad(){
-        double angle = thriftyEncoder.getPosition();
+        double angle = thriftEncoder.getVoltage() / RobotController.getVoltage3V3();
         angle *= 2.0 * Math.PI;
         angle -= absoluteEncoderOffsetRad;
         return angle * (absoluteEncoderReversed ? -1.0 : 1.0);
@@ -126,7 +125,7 @@ public class SwerveModule {
         turnMotor.set(turnController.calculate(getTurningPosition(), state.angle.getRadians()));
 
         SmartDashboard.putString(
-            "Swerve[" + moduleNumber + "] state", state.toString());
+            "Swerve [" + moduleNumber + "] state", state.toString());
     }
 
     public SwerveModulePosition getPosition(){

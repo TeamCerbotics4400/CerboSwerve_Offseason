@@ -62,10 +62,11 @@ public class RobotContainer {
     (m_drive, 
     () -> chassisDriver.getRawAxis(1), 
     () -> chassisDriver.getRawAxis(2), 
-    () -> chassisDriver.getRawAxis(3), 
+    () -> chassisDriver.getRawAxis(4), 
     () -> chassisDriver.getRawButton(4)));
 
     //Left bumper
+    /* 
    new JoystickButton(chassisDriver, 5)
    .onTrue(m_arm.goToPosition(ArmConstants.BACK_FLOOR_POSITION))
   .whileTrue(m_wrist.goToPosition(WristConstants.RIGHT_POSITION))
@@ -79,7 +80,7 @@ public class RobotContainer {
   .whileTrue(m_wrist.goToPosition(WristConstants.LEFT_POSITION))
   .whileTrue(new StateIntake(m_shooter, m_arm, IntakeState.INTAKING))
   .whileFalse(m_arm.goToPosition(ArmConstants.IDLE_POSITION))
-  .whileFalse(m_wrist.goToPosition(WristConstants.IDLE_POSITION));
+  .whileFalse(m_wrist.goToPosition(WristConstants.IDLE_POSITION));*/
 
   //Controller 2
    //Pov up
@@ -89,6 +90,7 @@ public class RobotContainer {
    new POVButton(subsystemsDriver, 180).onTrue(new InstantCommand(() -> m_selector.updateSelectionDown()));
 
    //Left bumper
+   /* 
     new JoystickButton(subsystemsDriver, 5)
    .onTrue(m_arm.goToPosition(ArmConstants.FRONT_FLOOR_POSITION))
    .whileTrue(m_wrist.goToPosition(WristConstants.LEFT_POSITION))
@@ -107,7 +109,7 @@ public class RobotContainer {
                                                                             m_selector));
 
    new JoystickButton(subsystemsDriver, 2).toggleOnTrue(
-    new InstantCommand(() -> StateMachines.setIntakeIdle()));
+    new InstantCommand(() -> StateMachines.setIntakeIdle()));*/
     //m_drive.setDefaultCommand(new StickRotationControl(m_drive, driverJoystick));
     //new JoystickButton(driverJoystick, 1).onTrue(new GoToAngle(m_drive));
   }

@@ -12,6 +12,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -34,8 +35,6 @@ public class DriveTrain extends SubsystemBase {
 
   private VisionSystem m_vision = new VisionSystem(this);
 
-  double currentAzimuth = 45;
-
   private final PIDController xPID = new PIDController(0, 0, 0);
   private final PIDController yPID = new PIDController(0, 0, 0);
   private final PIDController rotationPID = new PIDController(0, 0, 0);
@@ -43,22 +42,19 @@ public class DriveTrain extends SubsystemBase {
   /** Creates a new DriveTrain. */
   public DriveTrain() {
     zeroHeading();
-    SmartDashboard.putNumber("Current Azimuth", currentAzimuth);
+    //SmartDashboard.putNumber("Current Azimuth", );
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
 
-    SmartDashboard.putNumber("Current Sensor Encoder", swerveModules[0].getAnalogSensorPos());
-    
-    
-    double newAzimuth = SmartDashboard.getNumber("Current Azimuth", currentAzimuth);
-    //SmartDashboard.putNumber("Current Azimuth", currentAzimuth);
-
-    if(currentAzimuth != newAzimuth){
-      currentAzimuth = newAzimuth;
+    for(SwerveModule mod : swerveModules){
+      SmartDashboard.putNumber("Module [" + mod.moduleNumber + "] Sensor Encoder", 
+      Units.radiansToDegrees(swerveModules[mod.moduleNumber].getAbsoluteEncoderRad()));
     }
+    
+    
   }
 
   public void zeroHeading(){
@@ -107,9 +103,10 @@ public class DriveTrain extends SubsystemBase {
   }
 
   //DEBUG
+  /* 
   public void setModuleAngle(){
     swerveModules[0].setTurnMotorAngle(currentAzimuth);
-  }
+  }*/
 
   public void setTestMotorPower(double power){
     swerveModules[0].setTurnMotorPower(power);

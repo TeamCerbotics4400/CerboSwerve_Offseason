@@ -36,7 +36,7 @@ public final class Constants {
     public static final double kTurningEncoderRot2Rad = kTurningMotorGearRatio * 2 * Math.PI;
     public static final double kDriveEncoderRPM2MeterPerSec = kDriveEncoderRot2Meter / 60;
     public static final double kTurningEncoderRPM2RadPerSec = kTurningEncoderRot2Rad / 60;
-    public static final double kPTurning = 0.5; 
+    public static final double kPTurning = 0.07; 
   }
 
   public static final class DriveConstants{
@@ -74,7 +74,7 @@ public final class Constants {
       public static final boolean driveReversed = false;
       public static final boolean turnReversed = false;
       public static final boolean encoderReversed = false;
-      public static double encoderOffset = 0.0;
+      public static double encoderOffset = Units.degreesToRadians(201.0);//197.0;
 
       public static final SwerveModuleConstants CONSTANTS = 
       new SwerveModuleConstants(DRIVE_ID, TURN_ID, driveReversed, 
@@ -87,7 +87,7 @@ public final class Constants {
       public static final boolean driveReversed = false;
       public static final boolean turnReversed = false;
       public static final boolean encoderReversed = false;
-      public static double encoderOffset = 0.0;
+      public static double encoderOffset = Units.degreesToRadians(156.0);//153.0;
 
       public static final SwerveModuleConstants CONSTANTS = 
       new SwerveModuleConstants(DRIVE_ID, TURN_ID, driveReversed, 
@@ -100,7 +100,7 @@ public final class Constants {
       public static final boolean driveReversed = false;
       public static final boolean turnReversed = false;
       public static final boolean encoderReversed = false;
-      public static double encoderOffset = 0.0;
+      public static double encoderOffset = Units.degreesToRadians(105.0);//284.0;
 
       public static final SwerveModuleConstants CONSTANTS = 
       new SwerveModuleConstants(DRIVE_ID, TURN_ID, driveReversed, 
@@ -108,12 +108,12 @@ public final class Constants {
     }
 
     public static final class Module3{
-      public static final int DRIVE_ID = 19;
-      public static final int TURN_ID = 18;
+      public static final int DRIVE_ID = 18;
+      public static final int TURN_ID = 19;
       public static final boolean driveReversed = false;
       public static final boolean turnReversed = false;
       public static final boolean encoderReversed = false;
-      public static double encoderOffset = 0.0;
+      public static double encoderOffset = Units.degreesToRadians(33.0);//33.0;
 
       public static final SwerveModuleConstants CONSTANTS = 
       new SwerveModuleConstants(DRIVE_ID, TURN_ID, driveReversed, 
@@ -168,7 +168,7 @@ public final class Constants {
 
     public static double ARM_DEGREES_PER_MOTOR_ROTATION = 32.89;
 
-    public static double kP = 0.13821,//0.0011773,//0.012904,//4.3755E-09,
+    public static double kP = 0.013821,//0.0011773,//0.012904,//4.3755E-09,
                          kI = 0.0,
                          kD = 0.021835,//0.00017643,//0.0024401,//8.274E-10,
                          kFF = 0.0,//0.000156,
@@ -182,8 +182,8 @@ public final class Constants {
     public static double IDLE_POSITION = 90.0,
                          SUBSTATION_POSITION = 130.5,
                          SCORING_POSITION = 100,//115;
-                         BACK_FLOOR_POSITION = 1.15,
-                         FRONT_FLOOR_POSITION = 175.0,
+                         BACK_FLOOR_POSITION = 75,
+                         FRONT_FLOOR_POSITION = 115,
                          AVE_MARIA_SHOOT_POSITION = 120.0,
                          COUNTER_BALANCE_POSITION = 60.0,
                          TESTING_ANGLE = 90.0;

@@ -107,6 +107,7 @@ public final class Constants {
       turnReversed, encoderReversed, encoderOffset);
     }
 
+    //NOTE
     public static final class Module3{
       public static final int DRIVE_ID = 18;
       public static final int TURN_ID = 19;

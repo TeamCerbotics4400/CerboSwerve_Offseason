@@ -7,16 +7,16 @@ package frc.robot.commands.TeleopCommands;
 import java.util.function.Supplier;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.IOConstants;
 import frc.robot.subsystems.DriveTrain;
 
 public class TeleopControl extends CommandBase {
-  DriveTrain m_drive;
+  private final DriveTrain m_drive;
   private final Supplier<Double> xSpdFunction, ySpdFunction, turningSpdFunction;
   private final Supplier<Boolean> fieldOriented;
   private final SlewRateLimiter xLimiter, yLimiter, turningLimiter;
@@ -66,7 +66,7 @@ public class TeleopControl extends CommandBase {
         xSpeed, 
         ySpeed, 
         turningSpeed, 
-        Rotation2d.fromDegrees(m_drive.getHeading()));
+        m_drive.getRotation2d());
     } else {
       //Relative to robot (NOT RECOMMENDED)
       chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);
@@ -76,6 +76,8 @@ public class TeleopControl extends CommandBase {
             DriveConstants.kSwerveKinematics.toSwerveModuleStates(chassisSpeeds);
     
     m_drive.setModuleStates(moduleStates);
+    
+    SmartDashboard.putBoolean("Is Field Oriented", fieldOriented.get());
   }
 
   // Called once the command ends or is interrupted.

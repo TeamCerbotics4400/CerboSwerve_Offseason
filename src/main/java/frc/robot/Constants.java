@@ -29,14 +29,14 @@ import team4400.Util.SwerveModuleConstants;
 public final class Constants {
   public static final class ModuleConstants{
     public static final double kWheelDiameterMeters = Units.inchesToMeters(4);
-    public static final double kDriveMotorGearRatio = 5.50; //Drive Gear Ratio, 5.50 or 6.55
-    public static final double kTurningMotorGearRatio = 10.29; //Turning Gear Ratio
+    public static final double kDriveMotorGearRatio = 1 / 5.50; //Drive Gear Ratio, 5.50 or 6.55
+    public static final double kTurningMotorGearRatio = 1 / 10.29; //Turning Gear Ratio
     public static final double kDriveEncoderRot2Meter = 
                                 kDriveMotorGearRatio * Math.PI * kWheelDiameterMeters;
     public static final double kTurningEncoderRot2Rad = kTurningMotorGearRatio * 2 * Math.PI;
     public static final double kDriveEncoderRPM2MeterPerSec = kDriveEncoderRot2Meter / 60;
     public static final double kTurningEncoderRPM2RadPerSec = kTurningEncoderRot2Rad / 60;
-    public static final double kPTurning = 0.07; 
+    public static final double kPTurning = 0.5; 
   }
 
   public static final class DriveConstants{
@@ -97,7 +97,7 @@ public final class Constants {
     public static final class Module2{
       public static final int DRIVE_ID = 2;
       public static final int TURN_ID = 1;
-      public static final boolean driveReversed = false;
+      public static final boolean driveReversed = true;
       public static final boolean turnReversed = false;
       public static final boolean encoderReversed = false;
       public static double encoderOffset = Units.degreesToRadians(105.0);//284.0;
@@ -110,10 +110,10 @@ public final class Constants {
     public static final class Module3{
       public static final int DRIVE_ID = 18;
       public static final int TURN_ID = 19;
-      public static final boolean driveReversed = false;
+      public static final boolean driveReversed = true;
       public static final boolean turnReversed = false;
       public static final boolean encoderReversed = false;
-      public static double encoderOffset = Units.degreesToRadians(33.0);//33.0;
+      public static double encoderOffset = Units.degreesToRadians(277.0);//33.0;// Algo raro
 
       public static final SwerveModuleConstants CONSTANTS = 
       new SwerveModuleConstants(DRIVE_ID, TURN_ID, driveReversed, 
@@ -133,10 +133,10 @@ public final class Constants {
       new Translation2d(-kWheelBase / 2, -kTrackWidth));
 
     /*Free speed of each gearing:
-    * 5.50 = 20.25 ft/s
-    * 6.55 = 17.01 ft/s
+    * 5.50 = 18.01 ft/s
+    * 6.55 = 15.12 ft/s
     */
-    public static final double kPhysicalMaxSpeedMetersPerSecond = Units.feetToMeters(20.25);
+    public static final double kPhysicalMaxSpeedMetersPerSecond = Units.feetToMeters(18.01);
     public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
 
     public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond / 4;
@@ -172,8 +172,8 @@ public final class Constants {
                          kI = 0.0,
                          kD = 0.021835,//0.00017643,//0.0024401,//8.274E-10,
                          kFF = 0.0,//0.000156,
-                         kMaxVelocityRadPerSecond = 320,
-                         kMaxAccelerationMetersPerSecondSquared = 250,//320,
+                         kMaxVelocityRadPerSecond = 100,//320,
+                         kMaxAccelerationMetersPerSecondSquared = 55,//250,//320,
                          kS = 0.94615,//0.82172,
                          kV = 0.0021715,//0.0047927,
                          kA = 0.0019641,//0.003212,
@@ -198,8 +198,8 @@ public final class Constants {
                          kI = 0.0,
                          kD = 0.0151835,
                          kFF = 0.0,
-                         kMaxVelocityRadPerSecond = 440,
-                         kMaxAccelerationMetersPerSecondSquared = 440,
+                         kMaxVelocityRadPerSecond = 130,//440,
+                         kMaxAccelerationMetersPerSecondSquared = 130,//440,
                          kS = 0.46147,
                          kV = 0.020646,
                          kA = 0.008245,

@@ -9,6 +9,7 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -50,9 +51,16 @@ public class DriveTrain extends SubsystemBase {
     // This method will be called once per scheduler run
 
     for(SwerveModule mod : swerveModules){
-      SmartDashboard.putNumber("Module [" + mod.moduleNumber + "] Sensor Encoder", 
+      SmartDashboard.putNumber("Module [" + mod.moduleNumber + "] Absolute Encoder", 
       Units.radiansToDegrees(swerveModules[mod.moduleNumber].getAbsoluteEncoderRad()));
     }
+
+    for(SwerveModule mod : swerveModules){
+      SmartDashboard.putNumber("Module [" + mod.moduleNumber + "] Integrated Encoder", 
+      Units.radiansToDegrees(swerveModules[mod.moduleNumber].getTurningPosition()));
+    }
+
+    SmartDashboard.putNumber("IMU Angle", getHeading());
     
     
   }
@@ -75,6 +83,10 @@ public class DriveTrain extends SubsystemBase {
     for(SwerveModule mod : swerveModules){
       mod.stop();
     }
+  }
+
+  public Rotation2d getRotation2d(){
+    return Rotation2d.fromDegrees(getHeading());
   }
 
   public void setModuleStates(SwerveModuleState[] desiredStates){

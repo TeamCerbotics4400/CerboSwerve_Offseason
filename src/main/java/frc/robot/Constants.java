@@ -124,9 +124,9 @@ public final class Constants {
     public static final int IMU_ID = 13;
 
     //Distance between left and right wheels
-    public static final double kTrackWidth = 0.58;
+    public static final double kTrackWidth = 0.5842;
     //Distance between front and back wheels
-    public static final double kWheelBase = 0.66;
+    public static final double kWheelBase = 0.6604;
     public static final SwerveDriveKinematics kSwerveKinematics = new SwerveDriveKinematics(
       new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
       new Translation2d(kWheelBase / 2, kTrackWidth / 2),

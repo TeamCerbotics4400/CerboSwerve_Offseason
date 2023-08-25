@@ -21,7 +21,7 @@ import frc.robot.SwerveModule;
 import frc.robot.Constants.DriveConstants;
 
 public class DriveTrain extends SubsystemBase {
-  private SwerveModule[] swerveModules = new SwerveModule[]{
+  public SwerveModule[] swerveModules = new SwerveModule[]{
     //Left Front Module
     new SwerveModule(0, DriveConstants.Module0.CONSTANTS),
     //Right Front Module
@@ -34,7 +34,7 @@ public class DriveTrain extends SubsystemBase {
 
   private final Pigeon2 imu = new Pigeon2(DriveConstants.IMU_ID);
 
-  private VisionSystem m_vision = new VisionSystem(this);
+  //private VisionSystem m_vision = new VisionSystem(this);
 
   private final PIDController xPID = new PIDController(0, 0, 0);
   private final PIDController yPID = new PIDController(0, 0, 0);
@@ -42,7 +42,12 @@ public class DriveTrain extends SubsystemBase {
 
   /** Creates a new DriveTrain. */
   public DriveTrain() {
-    zeroHeading();
+    new Thread(() -> {
+      try{
+        Thread.sleep(1000);
+        zeroHeading();
+      } catch (Exception e){}
+    }).start();
     //SmartDashboard.putNumber("Current Azimuth", );
   }
 
@@ -125,7 +130,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   //AUTO RAMSETE
-  public Command followTrajectoryCommand(PathPlannerTrajectory trajectory){
+  /*public Command followTrajectoryCommand(PathPlannerTrajectory trajectory){
     PPSwerveControllerCommand ramseteCommand = new PPSwerveControllerCommand(
      trajectory, 
      () -> m_vision.estimatedPose2d(),
@@ -139,5 +144,5 @@ public class DriveTrain extends SubsystemBase {
     //Estoy cansado jefe
 
       return ramseteCommand;
-  }
+  }*/
 }

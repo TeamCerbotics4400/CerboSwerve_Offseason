@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ModuleConstants;
+import team4400.Util.RevModuleOptimizer;
 import team4400.Util.SwerveModuleConstants;
 
 /** Add your docs here. */
@@ -71,11 +72,7 @@ public class SwerveModule {
         turnController = new PIDController(ModuleConstants.kPTurning, 0, 0);
         turnController.enableContinuousInput(-Math.PI, Math.PI);
 
-        //turnSparkController = turnMotor.getPIDController();
         thriftEncoder = turnMotor.getAnalog(Mode.kAbsolute);
-
-        //thriftEncoder.setPositionConversionFactor(108.10);//1231.8796992481 / (4096 * 360));
-    //turnSparkController.setOutputRange(-0.5, 0.5);
 
         resetEncoders();
     }
@@ -85,7 +82,7 @@ public class SwerveModule {
     }
 
     public double getTurningPosition(){
-        return Math.IEEEremainder(turnEncoder.getPosition(), Units.degreesToRadians(-360));
+       return Math.IEEEremainder(turnEncoder.getPosition(), Units.degreesToRadians(-360));
     }
 
     public double getDriveVelocity(){
@@ -117,9 +114,10 @@ public class SwerveModule {
             stop();
             return;
         }
-        state = SwerveModuleState.optimize(state, getState().angle);
+        state = RevModuleOptimizer.optimize(state, getState().angle);
         driveMotor.set(state.speedMetersPerSecond 
         / DriveConstants.kPhysicalMaxSpeedMetersPerSecond);//Check when the swerve chassis is done
+        //turnMotor.set(turnController.calculate(getAbsoluteEncoderRad, state.angle.getRadians()));
         turnMotor.set(turnController.calculate(getTurningPosition(), state.angle.getRadians()));
 
         SmartDashboard.putString(

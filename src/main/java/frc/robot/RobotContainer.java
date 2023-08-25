@@ -32,7 +32,7 @@ import team4400.StateMachines.IntakeState;
  */
 public class RobotContainer {
 
-  private final DriveTrain m_drive = new DriveTrain();
+  private final DriveTrain m_drive;
   private final ArmSubsystem m_arm = new ArmSubsystem();
   private final WristSubsystem m_wrist = new WristSubsystem();
   private final FalconShooter m_shooter = new FalconShooter();
@@ -44,7 +44,16 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    m_drive = new DriveTrain();
     // Configure the trigger bindings
+
+    m_drive.setDefaultCommand(new TeleopControl
+    (m_drive, 
+    () -> chassisDriver.getRawAxis(1), 
+    () -> -chassisDriver.getRawAxis(0), 
+    () -> chassisDriver.getRawAxis(4), 
+    () -> !chassisDriver.getRawButton(4)));
+
     configureBindings();
   }
 
@@ -58,12 +67,8 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    m_drive.setDefaultCommand(new TeleopControl
-    (m_drive, 
-    () -> chassisDriver.getRawAxis(1), 
-    () -> -chassisDriver.getRawAxis(0), 
-    () -> chassisDriver.getRawAxis(4), 
-    () -> chassisDriver.getRawButton(4)));
+    new JoystickButton(chassisDriver, 1).onTrue(
+      new InstantCommand(() -> m_drive.zeroHeading()));
 
     //Left bumper
     /* 
@@ -122,5 +127,9 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     return null;
+  }
+
+  public DriveTrain getDrive(){
+    return m_drive;
   }
 }

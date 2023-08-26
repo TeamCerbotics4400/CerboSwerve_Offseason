@@ -128,10 +128,10 @@ public final class Constants {
     //Distance between front and back wheels
     public static final double kWheelBase = 0.6604;
     public static final SwerveDriveKinematics kSwerveKinematics = new SwerveDriveKinematics(
-      new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
       new Translation2d(kWheelBase / 2, kTrackWidth / 2),
-      new Translation2d(-kWheelBase / 2, -kTrackWidth / 2),
-      new Translation2d(-kWheelBase / 2, -kTrackWidth));
+      new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
+      new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
+      new Translation2d(-kWheelBase / 2, -kTrackWidth /2 ));
 
     /*Free speed of each gearing:
     * 5.50 = 18.01 ft/s

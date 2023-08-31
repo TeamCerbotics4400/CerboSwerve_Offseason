@@ -24,8 +24,7 @@
               "_showGlyph": false,
               "Game/Game": "A2023_Charged_Up",
               "Visuals/Robot Icon Size": 50.0,
-              "Visuals/Show Outside Circles": false,
-              "Colors/Cam est Pose": "#FFFFFFFF"
+              "Visuals/Show Outside Circles": false
             }
           },
           "2,0": {
@@ -512,6 +511,19 @@
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/IMU Angle",
               "_title": "SmartDashboard/IMU Angle",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "4,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Rotation2d",
+              "_title": "SmartDashboard/Rotation2d",
               "_glyph": 148,
               "_showGlyph": false
             }

@@ -130,8 +130,16 @@ public final class Constants {
     public static final SwerveDriveKinematics kSwerveKinematics = new SwerveDriveKinematics(
       new Translation2d(kWheelBase / 2, kTrackWidth / 2),
       new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
-      new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
-      new Translation2d(-kWheelBase / 2, -kTrackWidth /2 ));
+      new Translation2d(-kWheelBase / 2, -kTrackWidth / 2),
+      new Translation2d(kWheelBase / 2, -kTrackWidth /2 ));
+
+      /*
+       * Kinematics order:
+       * 1. Mod0
+       * 2. Mod1
+       * 3. Mod
+       * 4. Mod
+       */
 
     /*Free speed of each gearing:
     * 5.50 = 18.01 ft/s

@@ -66,6 +66,8 @@ public class DriveTrain extends SubsystemBase {
     }
 
     SmartDashboard.putNumber("IMU Angle", getHeading());
+
+    SmartDashboard.putNumber("Rotation2d", getRotation2d().getDegrees());
     
     
   }
@@ -75,7 +77,8 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public double getHeading(){
-    return Math.IEEEremainder(imu.getYaw(), 360);
+    return Math.IEEEremainder(Units.degreesToRadians(imu.getYaw()), 
+    Units.degreesToRadians(360));
   }
 
   public void resetModuleEncoders(){
@@ -91,7 +94,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public Rotation2d getRotation2d(){
-    return Rotation2d.fromDegrees(getHeading());
+    return Rotation2d.fromRadians(getHeading());
   }
 
   public void setModuleStates(SwerveModuleState[] desiredStates){

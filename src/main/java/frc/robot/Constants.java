@@ -137,8 +137,8 @@ public final class Constants {
        * Kinematics order:
        * 1. Mod0
        * 2. Mod1
-       * 3. Mod
-       * 4. Mod
+       * 3. Mod2
+       * 4. Mod3
        */
 
     /*Free speed of each gearing:

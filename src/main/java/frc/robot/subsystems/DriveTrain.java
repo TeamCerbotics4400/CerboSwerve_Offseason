@@ -122,16 +122,6 @@ public class DriveTrain extends SubsystemBase {
     return positions;
   }
 
-  //DEBUG
-  /* 
-  public void setModuleAngle(){
-    swerveModules[0].setTurnMotorAngle(currentAzimuth);
-  }*/
-
-  public void setTestMotorPower(double power){
-    swerveModules[0].setTurnMotorPower(power);
-  }
-
   //AUTO RAMSETE
   /*public Command followTrajectoryCommand(PathPlannerTrajectory trajectory){
     PPSwerveControllerCommand ramseteCommand = new PPSwerveControllerCommand(

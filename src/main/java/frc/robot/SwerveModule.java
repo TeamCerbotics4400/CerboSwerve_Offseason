@@ -18,6 +18,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ModuleConstants;
@@ -52,8 +53,7 @@ public class SwerveModule {
 
         absoluteEncoderOffsetRad = moduleConstants.angleOffset;
         absoluteEncoderReversed = moduleConstants.absoluteEncoderReversed;
-        
-        //Check to what Motor Controller the encoder is going to be connected to.
+        thriftEncoder = turnMotor.getAnalog(Mode.kAbsolute);
 
         driveMotor.restoreFactoryDefaults();
         turnMotor.restoreFactoryDefaults();
@@ -72,8 +72,7 @@ public class SwerveModule {
         turnController = new PIDController(ModuleConstants.kPTurning, 0, 0);
         turnController.enableContinuousInput(-Math.PI, Math.PI);
 
-        thriftEncoder = turnMotor.getAnalog(Mode.kAbsolute);
-
+        Timer.delay(1.0);
         resetEncoders();
     }
 
@@ -127,26 +126,11 @@ public class SwerveModule {
     public SwerveModulePosition getPosition(){
         return new SwerveModulePosition(
             getDrivePosition(), 
-            Rotation2d.fromDegrees(getTurningPosition()));
+            Rotation2d.fromRadians(getTurningPosition()));
     }
 
     public void stop(){
         driveMotor.set(0);
         turnMotor.set(0);
-    }
-
-    public double getAnalogSensorPos(){
-        return thriftEncoder.getPosition();
-    }
-
-    /*public void setTurnMotorAngle(double angle){
-        turnSparkController.setFeedbackDevice(thriftEncoder);
-        turnSparkController.setP(0.0005);
-        turnSparkController.setFF(0.001);
-        turnSparkController.setReference(angle, ControlType.kPosition);
-    }*/
-
-    public void setTurnMotorPower(double power){
-        turnMotor.set(power);
     }
 }

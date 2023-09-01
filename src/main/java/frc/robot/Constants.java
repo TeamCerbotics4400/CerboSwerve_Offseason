@@ -168,7 +168,6 @@ public final class Constants {
                         kFF = 0.0495;
 
     public static final double shooterTreshold = 300;
-
   }
 
   public static final class ArmConstants {

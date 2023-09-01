@@ -13,7 +13,7 @@
         "tiles": {
           "0,0": {
             "size": [
-              2,
+              1,
               1
             ],
             "content": {
@@ -27,7 +27,7 @@
               "Visuals/Show Outside Circles": false
             }
           },
-          "2,0": {
+          "1,0": {
             "size": [
               1,
               1
@@ -40,7 +40,7 @@
               "_showGlyph": false
             }
           },
-          "3,0": {
+          "2,0": {
             "size": [
               1,
               1
@@ -53,7 +53,7 @@
               "_showGlyph": false
             }
           },
-          "4,0": {
+          "3,0": {
             "size": [
               1,
               1
@@ -66,7 +66,7 @@
               "_showGlyph": false
             }
           },
-          "5,0": {
+          "4,0": {
             "size": [
               1,
               1
@@ -79,7 +79,7 @@
               "_showGlyph": false
             }
           },
-          "6,0": {
+          "5,0": {
             "size": [
               1,
               1
@@ -92,7 +92,7 @@
               "_showGlyph": false
             }
           },
-          "7,0": {
+          "6,0": {
             "size": [
               1,
               1
@@ -105,7 +105,7 @@
               "_showGlyph": false
             }
           },
-          "8,0": {
+          "7,0": {
             "size": [
               1,
               1
@@ -226,7 +226,7 @@
               "Colors/Color when false": "#8B0000FF"
             }
           },
-          "8,1": {
+          "8,0": {
             "size": [
               1,
               1
@@ -343,7 +343,7 @@
               "_showGlyph": false
             }
           },
-          "8,2": {
+          "8,1": {
             "size": [
               1,
               1
@@ -352,6 +352,45 @@
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/Module [1] Integrated Encoder",
               "_title": "Module [1] Integrated Encoder",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "9,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Module [2] Integrated Encoder",
+              "_title": "Module [2] Integrated Encoder",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "10,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Module [3] Integrated Encoder",
+              "_title": "Module [3] Integrated Encoder",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "11,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Rotation2d",
+              "_title": "Rotation2d",
               "_glyph": 148,
               "_showGlyph": false
             }
@@ -524,6 +563,242 @@
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/Rotation2d",
               "_title": "SmartDashboard/Rotation2d",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Tab 4",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 95.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "titleType": 0,
+        "tiles": {
+          "0,0": {
+            "size": [
+              6,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Swerve [0] state",
+              "_title": "/SmartDashboard/Swerve [0] state",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "0,1": {
+            "size": [
+              6,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Swerve [1] state",
+              "_title": "/SmartDashboard/Swerve [1] state",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "0,2": {
+            "size": [
+              6,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Swerve [2] state",
+              "_title": "/SmartDashboard/Swerve [2] state",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "0,3": {
+            "size": [
+              6,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Swerve [3] state",
+              "_title": "/SmartDashboard/Swerve [3] state",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "6,0": {
+            "size": [
+              4,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Module [0] Integrated Encoder",
+              "_title": "/SmartDashboard/Module [0] Integrated Encoder",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "6,1": {
+            "size": [
+              4,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Module [1] Integrated Encoder",
+              "_title": "/SmartDashboard/Module [1] Integrated Encoder",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "6,2": {
+            "size": [
+              4,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Module [2] Integrated Encoder",
+              "_title": "/SmartDashboard/Module [2] Integrated Encoder",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "6,3": {
+            "size": [
+              4,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Module [3] Integrated Encoder",
+              "_title": "/SmartDashboard/Module [3] Integrated Encoder",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Tab 5",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 95.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "titleType": 0,
+        "tiles": {
+          "0,0": {
+            "size": [
+              3,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Module [0] Absolute Encoder",
+              "_title": "/SmartDashboard/Module [0] Absolute Encoder",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "0,1": {
+            "size": [
+              3,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Module [1] Absolute Encoder",
+              "_title": "/SmartDashboard/Module [1] Absolute Encoder",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "0,2": {
+            "size": [
+              3,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Module [2] Absolute Encoder",
+              "_title": "/SmartDashboard/Module [2] Absolute Encoder",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "0,3": {
+            "size": [
+              3,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Module [3] Absolute Encoder",
+              "_title": "/SmartDashboard/Module [3] Absolute Encoder",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "5,0": {
+            "size": [
+              4,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Module [0] Integrated Encoder",
+              "_title": "/SmartDashboard/Module [0] Integrated Encoder",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "5,1": {
+            "size": [
+              4,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Module [1] Integrated Encoder",
+              "_title": "/SmartDashboard/Module [1] Integrated Encoder",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "5,2": {
+            "size": [
+              4,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Module [2] Integrated Encoder",
+              "_title": "/SmartDashboard/Module [2] Integrated Encoder",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "5,3": {
+            "size": [
+              4,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Module [3] Integrated Encoder",
+              "_title": "/SmartDashboard/Module [3] Integrated Encoder",
               "_glyph": 148,
               "_showGlyph": false
             }

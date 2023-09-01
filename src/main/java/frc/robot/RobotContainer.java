@@ -32,7 +32,7 @@ import team4400.StateMachines.IntakeState;
  */
 public class RobotContainer {
 
-  private final DriveTrain m_drive;
+  private final DriveTrain m_drive = new DriveTrain();
   private final ArmSubsystem m_arm = new ArmSubsystem();
   private final WristSubsystem m_wrist = new WristSubsystem();
   private final FalconShooter m_shooter = new FalconShooter();
@@ -44,7 +44,6 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    m_drive = new DriveTrain();
     // Configure the trigger bindings
 
     m_drive.setDefaultCommand(new TeleopControl

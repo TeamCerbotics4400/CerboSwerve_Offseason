@@ -116,7 +116,6 @@ public class SwerveModule {
         state = RevModuleOptimizer.optimize(state, getState().angle);
         driveMotor.set(state.speedMetersPerSecond 
         / DriveConstants.kPhysicalMaxSpeedMetersPerSecond);//Check when the swerve chassis is done
-        //turnMotor.set(turnController.calculate(getAbsoluteEncoderRad, state.angle.getRadians()));
         turnMotor.set(turnController.calculate(getTurningPosition(), state.angle.getRadians()));
 
         SmartDashboard.putString(

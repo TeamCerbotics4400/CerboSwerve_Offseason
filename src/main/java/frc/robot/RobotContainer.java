@@ -48,9 +48,9 @@ public class RobotContainer {
 
     m_drive.setDefaultCommand(new TeleopControl
     (m_drive, 
-    () -> chassisDriver.getRawAxis(1), 
-    () -> -chassisDriver.getRawAxis(0), 
-    () -> chassisDriver.getRawAxis(4), 
+    () -> -chassisDriver.getRawAxis(1), 
+    () -> chassisDriver.getRawAxis(0), 
+    () -> -chassisDriver.getRawAxis(4), 
     () -> !chassisDriver.getRawButton(4)));
 
     configureBindings();

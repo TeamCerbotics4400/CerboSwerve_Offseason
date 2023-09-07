@@ -107,7 +107,6 @@ public final class Constants {
       turnReversed, encoderReversed, encoderOffset);
     }
 
-    //NOTE
     public static final class Module3{
       public static final int DRIVE_ID = 18;
       public static final int TURN_ID = 19;
@@ -127,11 +126,16 @@ public final class Constants {
     public static final double kTrackWidth = 0.5842;
     //Distance between front and back wheels
     public static final double kWheelBase = 0.6604;
+    //Original
+    //+ / +
+    //- / +
+    //- / -
+    //+ / -
     public static final SwerveDriveKinematics kSwerveKinematics = new SwerveDriveKinematics(
-      new Translation2d(kWheelBase / 2, kTrackWidth / 2),
-      new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
-      new Translation2d(-kWheelBase / 2, -kTrackWidth / 2),
-      new Translation2d(kWheelBase / 2, -kTrackWidth /2 ));
+      new Translation2d(kWheelBase / 3, kTrackWidth / 2),
+      new Translation2d(-kWheelBase / 3, kTrackWidth / 2),
+      new Translation2d(-kWheelBase / 3, -kTrackWidth / 2),
+      new Translation2d(kWheelBase / 3, -kTrackWidth / 2 ));
 
       /*
        * Kinematics order:

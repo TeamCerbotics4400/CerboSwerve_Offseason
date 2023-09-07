@@ -18,7 +18,6 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ModuleConstants;
@@ -69,11 +68,13 @@ public class SwerveModule {
         turnEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderRot2Rad);
         turnEncoder.setVelocityConversionFactor(ModuleConstants.kTurningEncoderRPM2RadPerSec);
 
+        turnEncoder.setPosition(getAbsoluteEncoderRad());
+        driveEncoder.setPosition(0);
+
         turnController = new PIDController(ModuleConstants.kPTurning, 0, 0);
         turnController.enableContinuousInput(-Math.PI, Math.PI);
 
-        Timer.delay(1.0);
-        resetEncoders();
+        //resetEncoders();
     }
 
     public double getDrivePosition(){
@@ -81,7 +82,7 @@ public class SwerveModule {
     }
 
     public double getTurningPosition(){
-       return Math.IEEEremainder(turnEncoder.getPosition(), Units.degreesToRadians(-360));
+       return turnEncoder.getPosition();
     }
 
     public double getDriveVelocity(){
@@ -109,10 +110,12 @@ public class SwerveModule {
     }
 
     public void setDesiredState(SwerveModuleState state){
+
         if(Math.abs(state.speedMetersPerSecond) < 0.001){
             stop();
             return;
         }
+
         state = RevModuleOptimizer.optimize(state, getState().angle);
         driveMotor.set(state.speedMetersPerSecond 
         / DriveConstants.kPhysicalMaxSpeedMetersPerSecond);//Check when the swerve chassis is done
@@ -125,7 +128,7 @@ public class SwerveModule {
     public SwerveModulePosition getPosition(){
         return new SwerveModulePosition(
             getDrivePosition(), 
-            Rotation2d.fromRadians(getTurningPosition()));
+            new Rotation2d(getTurningPosition()));
     }
 
     public void stop(){

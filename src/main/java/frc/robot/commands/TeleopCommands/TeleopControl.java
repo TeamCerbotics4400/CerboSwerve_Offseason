@@ -60,6 +60,7 @@ public class TeleopControl extends CommandBase {
           * DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
 
     ChassisSpeeds chassisSpeeds;
+
     if(fieldOriented.get()){
       //Relative to the field
       chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(

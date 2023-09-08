@@ -48,7 +48,6 @@ public class DriveTrain extends SubsystemBase {
         zeroHeading();
       } catch (Exception e){}
     }).start();
-    //SmartDashboard.putNumber("Current Azimuth", );
   }
 
   @Override
@@ -65,11 +64,7 @@ public class DriveTrain extends SubsystemBase {
       Units.radiansToDegrees(swerveModules[mod.moduleNumber].getTurningPosition()));
     }
 
-    SmartDashboard.putNumber("IMU Angle", getHeading());
-
-    SmartDashboard.putNumber("Rotation2d", getRotation2d().getDegrees());
-    
-    
+    SmartDashboard.putNumber("IMU Angle", getHeading());    
   }
 
   public void zeroHeading(){

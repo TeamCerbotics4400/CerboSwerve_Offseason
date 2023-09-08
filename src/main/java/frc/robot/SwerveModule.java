@@ -7,8 +7,6 @@ package frc.robot;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxAnalogSensor;
-//import com.revrobotics.SparkMaxPIDController;
-//import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxAnalogSensor.Mode;
 
@@ -35,7 +33,6 @@ public class SwerveModule {
     private final RelativeEncoder driveEncoder;
     private final RelativeEncoder turnEncoder;
 
-    //private final SparkMaxPIDController turnSparkController;
     private final SparkMaxAnalogSensor thriftEncoder;
 
     private final PIDController turnController;
@@ -68,13 +65,10 @@ public class SwerveModule {
         turnEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderRot2Rad);
         turnEncoder.setVelocityConversionFactor(ModuleConstants.kTurningEncoderRPM2RadPerSec);
 
-        turnEncoder.setPosition(getAbsoluteEncoderRad());
-        driveEncoder.setPosition(0);
-
         turnController = new PIDController(ModuleConstants.kPTurning, 0, 0);
         turnController.enableContinuousInput(-Math.PI, Math.PI);
 
-        //resetEncoders();
+        resetEncoders();
     }
 
     public double getDrivePosition(){

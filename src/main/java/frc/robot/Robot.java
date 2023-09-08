@@ -77,6 +77,9 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    //TODO: Test this tomorrow 9/7/2023
+    //m_robotContainer.getDrive().resetModuleEncoders();
   }
 
   /** This function is called periodically during operator control. */

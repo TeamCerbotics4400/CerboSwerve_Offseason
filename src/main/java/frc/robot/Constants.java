@@ -152,11 +152,12 @@ public final class Constants {
     public static final double kPhysicalMaxSpeedMetersPerSecond = Units.feetToMeters(18.01);
     public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
 
-    public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond / 4;
-        public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = 
+    public static final double kTeleDriveMaxSpeedMetersPerSecond = 
+                kPhysicalMaxSpeedMetersPerSecond / 4;
+    public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = 
                 kPhysicalMaxAngularSpeedRadiansPerSecond / 4;
-        public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3;
-        public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
+    public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3;
+    public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
   }
 
   /*************** SUPERSTRUCTURE ****************/
@@ -180,16 +181,18 @@ public final class Constants {
 
     public static double ARM_DEGREES_PER_MOTOR_ROTATION = 32.89;
 
-    public static double kP = 0.013821,//0.0011773,//0.012904,//4.3755E-09,
+    //TODO: RETUNE ARM FF AND PID VALUES
+
+    public static double kP = 0.0,//0.013821,//0.0011773,//0.012904,//4.3755E-09,
                          kI = 0.0,
-                         kD = 0.021835,//0.00017643,//0.0024401,//8.274E-10,
+                         kD = 0.0,//0.021835,//0.00017643,//0.0024401,//8.274E-10,
                          kFF = 0.0,//0.000156,
                          kMaxVelocityRadPerSecond = 100,//320,
                          kMaxAccelerationMetersPerSecondSquared = 55,//250,//320,
-                         kS = 0.94615,//0.82172,
-                         kV = 0.0021715,//0.0047927,
-                         kA = 0.0019641,//0.003212,
-                         kG = 0.12588;//0.44033;
+                         kS = 0.0,//0.94615,//0.82172,
+                         kV = 0.0,//0.0021715,//0.0047927,
+                         kA = 0.0,//0.0019641,//0.003212,
+                         kG = 0.0;//0.12588;//0.44033;
 
     public static double IDLE_POSITION = 90.0,
                          SUBSTATION_POSITION = 130.5,

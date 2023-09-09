@@ -4,9 +4,13 @@
 
 package frc.robot.commands.TeleopCommands;
 
+import java.util.function.BooleanSupplier;
+import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -17,23 +21,22 @@ import frc.robot.subsystems.DriveTrain;
 
 public class TeleopControl extends CommandBase {
   private final DriveTrain m_drive;
-  private final Supplier<Double> xSpdFunction, ySpdFunction, turningSpdFunction;
-  private final Supplier<Boolean> fieldOriented;
-  private final SlewRateLimiter xLimiter, yLimiter, turningLimiter;
-
+  private Supplier<Double> translationSup;
+  private Supplier<Double> strafeSup;
+  private Supplier<Double> rotationSup;
+  private Supplier<Boolean> robotCentricSup;
+ 
   /** Creates a new TeleopControl. */
-  public TeleopControl(DriveTrain m_drive, Supplier<Double> xSpdFunction, 
-  Supplier<Double> ySpdFunction, Supplier<Double> turningSpdFunction, 
-  Supplier<Boolean> fieldOriented) {
+  public TeleopControl(DriveTrain m_drive, Supplier<Double> translationSup, 
+  Supplier<Double> strafeSup,
+  Supplier<Double> rotationSup, 
+  Supplier<Boolean> robotCentricSup) {
 
     this.m_drive = m_drive;
-    this.xSpdFunction = xSpdFunction;
-    this.ySpdFunction = ySpdFunction;
-    this.turningSpdFunction = turningSpdFunction;
-    this.fieldOriented = fieldOriented;
-    this.xLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
-    this.yLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
-    this.turningLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
+    this.translationSup = translationSup;
+    this.strafeSup = strafeSup;
+    this.rotationSup = rotationSup;
+    this.robotCentricSup = robotCentricSup;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_drive);
@@ -46,40 +49,19 @@ public class TeleopControl extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double xSpeed = xSpdFunction.get();
-    double ySpeed = ySpdFunction.get();
-    double turningSpeed = turningSpdFunction.get();
-
-    xSpeed = Math.abs(xSpeed) > IOConstants.kDeadband ? xSpeed : 0.0;
-    ySpeed = Math.abs(ySpeed) > IOConstants.kDeadband ? ySpeed : 0.0;
-    turningSpeed = Math.abs(turningSpeed) > IOConstants.kDeadband ? turningSpeed : 0.0;
-
-    xSpeed = xLimiter.calculate(xSpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
-    ySpeed = yLimiter.calculate(ySpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
-    turningSpeed = turningLimiter.calculate(turningSpeed) 
-          * DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
-
-    ChassisSpeeds chassisSpeeds;
-
-    if(fieldOriented.get()){
-      //Relative to the field
-      chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-        xSpeed, 
-        ySpeed, 
-        turningSpeed, 
-        m_drive.getRotation2d());
-        
-    } else {
-      //Relative to robot (NOT RECOMMENDED)
-      chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);
-    }
-
-    SwerveModuleState[] moduleStates = 
-            DriveConstants.kSwerveKinematics.toSwerveModuleStates(chassisSpeeds);
-    
-    m_drive.setModuleStates(moduleStates);
-    
-    SmartDashboard.putBoolean("Is Field Oriented", fieldOriented.get());
+    double translationVal = MathUtil.applyDeadband(translationSup.get(), 
+                                                              IOConstants.kDeadband);
+    double strafeVal = MathUtil.applyDeadband(strafeSup.get(), 
+                                                              IOConstants.kDeadband);
+    double rotationVal = MathUtil.applyDeadband(rotationSup.get(), 
+                                                              IOConstants.kDeadband); 
+                                                              
+    m_drive.drive(
+      new Translation2d(translationVal, strafeVal)
+      .times(DriveConstants.kTeleDriveMaxSpeedMetersPerSecond), 
+      rotationVal * DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond, 
+      !robotCentricSup.get(), 
+      true);
   }
 
   // Called once the command ends or is interrupted.

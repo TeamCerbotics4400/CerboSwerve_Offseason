@@ -4,9 +4,14 @@
 
 package frc.robot;
 
+import java.util.ResourceBundle.Control;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxAnalogSensor;
+import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.ControlType;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxAnalogSensor.Mode;
 
@@ -35,10 +40,15 @@ public class SwerveModule {
 
     private final SparkMaxAnalogSensor thriftEncoder;
 
+    private final SparkMaxPIDController driveSparkController;
+    private final SparkMaxPIDController turnSparkController;
+
     private final PIDController turnController;
 
     private final boolean absoluteEncoderReversed;
     private final double absoluteEncoderOffsetRad;
+
+    private Rotation2d lastAngle;
     
     public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants){
 
@@ -57,6 +67,9 @@ public class SwerveModule {
         driveMotor.setInverted(moduleConstants.driveReversed);
         turnMotor.setInverted(moduleConstants.turnReversed);
 
+        driveMotor.setIdleMode(IdleMode.kBrake);
+        turnMotor.setIdleMode(IdleMode.kCoast);
+
         driveEncoder = driveMotor.getEncoder();
         turnEncoder = turnMotor.getEncoder();
 
@@ -65,8 +78,25 @@ public class SwerveModule {
         turnEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderRot2Rad);
         turnEncoder.setVelocityConversionFactor(ModuleConstants.kTurningEncoderRPM2RadPerSec);
 
+        driveSparkController = driveMotor.getPIDController();
+        turnSparkController = turnMotor.getPIDController();
+
+        driveSparkController.setP(ModuleConstants.drivekP);
+        driveSparkController.setI(ModuleConstants.drivekI);
+        driveSparkController.setD(ModuleConstants.drivekD);
+        driveSparkController.setFF(ModuleConstants.drivekFF);
+
+        turnSparkController.setP(ModuleConstants.turnkP);
+        turnSparkController.setI(ModuleConstants.turnkI);
+        turnSparkController.setD(ModuleConstants.turnkD);
+        turnSparkController.setFF(ModuleConstants.turnkFF);
+
+        //turnSparkController.setFeedbackDevice(thriftEncoder);
+
         turnController = new PIDController(ModuleConstants.kPTurning, 0, 0);
         turnController.enableContinuousInput(-Math.PI, Math.PI);
+
+        lastAngle = getState().angle;
 
         resetEncoders();
     }
@@ -103,7 +133,36 @@ public class SwerveModule {
         return new SwerveModuleState(getDriveVelocity(), new Rotation2d(getTurningPosition()));
     }
 
-    public void setDesiredState(SwerveModuleState state){
+    public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop){
+        desiredState = RevModuleOptimizer.optimize(desiredState, getState().angle);
+        setSpeed(desiredState, isOpenLoop);
+        setAngle(desiredState);
+
+        SmartDashboard.putString(
+            "Swerve [" + moduleNumber + "] state", desiredState.toString());
+    }
+
+    public void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop){
+        if(isOpenLoop){
+            double percentOutput = desiredState.speedMetersPerSecond / 
+                                            DriveConstants.kPhysicalMaxSpeedMetersPerSecond;
+            driveMotor.set(percentOutput);
+        } else {
+            //Code for PID Drive
+            double velocity = desiredState.speedMetersPerSecond;
+            driveSparkController.setReference(velocity, ControlType.kVelocity);
+        }
+    }
+
+    public void setAngle(SwerveModuleState desiredState){
+        Rotation2d angle = (Math.abs(desiredState.speedMetersPerSecond) <=
+         DriveConstants.kPhysicalMaxSpeedMetersPerSecond * 0.01) ? lastAngle : desiredState.angle;
+
+        turnSparkController.setReference(angle.getRadians(), ControlType.kPosition);
+        lastAngle = angle;
+    }
+
+    /*public void setDesiredState(SwerveModuleState state){
 
         if(Math.abs(state.speedMetersPerSecond) < 0.001){
             stop();
@@ -117,7 +176,7 @@ public class SwerveModule {
 
         SmartDashboard.putString(
             "Swerve [" + moduleNumber + "] state", state.toString());
-    }
+    }*/
 
     public SwerveModulePosition getPosition(){
         return new SwerveModulePosition(

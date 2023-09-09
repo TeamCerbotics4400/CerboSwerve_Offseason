@@ -10,6 +10,8 @@ import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -96,7 +98,7 @@ public class DriveTrain extends SubsystemBase {
       desiredStates, 
       DriveConstants.kPhysicalMaxSpeedMetersPerSecond);
     for(SwerveModule mod : swerveModules){
-      mod.setDesiredState(desiredStates[mod.moduleNumber]);
+      mod.setDesiredState(desiredStates[mod.moduleNumber], false);
     }
   }
 
@@ -114,6 +116,26 @@ public class DriveTrain extends SubsystemBase {
       positions[mod.moduleNumber] = mod.getPosition();
     }
     return positions;
+  }
+
+  public void drive(Translation2d translation, double rotation, 
+  boolean fieldRelative, boolean isOpenLoop){
+    SwerveModuleState[] swerveModuleStates =
+     DriveConstants.kSwerveKinematics.toSwerveModuleStates(
+      fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
+        translation.getX(), 
+        translation.getY(),
+        rotation,
+        getRotation2d()) : new ChassisSpeeds(
+      translation.getX(), 
+      translation.getY(), 
+      rotation));
+
+    SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, DriveConstants.kPhysicalMaxSpeedMetersPerSecond);
+
+    for(SwerveModule mod : swerveModules){
+      mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
+    }
   }
 
   //AUTO RAMSETE

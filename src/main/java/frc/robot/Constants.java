@@ -43,10 +43,10 @@ public final class Constants {
                                drivekD = 0,
                                drivekFF = 0;
     
-    public static final double turnkP = 0.0002438,
+    public static final double turnkP = 0.13,
                                turnkI = 0,
-                               turnkD = 9.9465E-06,
-                               turnkFF = 0.0009;
+                               turnkD = 0,
+                               turnkFF = 0;
   }
 
   public static final class DriveConstants{

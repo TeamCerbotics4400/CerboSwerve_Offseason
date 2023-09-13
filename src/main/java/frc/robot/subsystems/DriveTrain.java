@@ -64,7 +64,17 @@ public class DriveTrain extends SubsystemBase {
       Units.radiansToDegrees(swerveModules[mod.moduleNumber].getTurningPosition()));
     }
 
-    SmartDashboard.putNumber("IMU Angle", getHeading());    
+    SmartDashboard.putNumber("IMU Angle", getHeading());  
+    
+    for(SwerveModule mod : swerveModules){
+      SmartDashboard.putNumber("Module [" + mod.moduleNumber + "] Rev Absolute Pose", 
+      Units.radiansToDegrees(swerveModules[mod.moduleNumber].getAbsolutePos()));
+    }    
+
+    for(SwerveModule mod : swerveModules){
+      SmartDashboard.putNumber("Module [" + mod.moduleNumber + "] Absolute Voltage", 
+      swerveModules[mod.moduleNumber].getAbsoluteVoltage());
+    }
   }
 
   public void zeroHeading(){

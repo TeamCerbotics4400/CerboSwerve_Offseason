@@ -16,6 +16,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ModuleConstants;
@@ -65,9 +66,12 @@ public class SwerveModule {
         turnEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderRot2Rad);
         turnEncoder.setVelocityConversionFactor(ModuleConstants.kTurningEncoderRPM2RadPerSec);
 
+        thriftEncoder.setPositionConversionFactor(ModuleConstants.kAbsoluteEncoderVolts2Rad);
+
         turnController = new PIDController(ModuleConstants.kPTurning, 0, 0);
         turnController.enableContinuousInput(-Math.PI, Math.PI);
 
+        Timer.delay(1.0);
         resetEncoders();
     }
 
@@ -85,6 +89,14 @@ public class SwerveModule {
 
     public double getTurningVelocity(){
         return turnEncoder.getVelocity();
+    }
+
+    public double getAbsoluteVoltage(){
+        return thriftEncoder.getVoltage();
+    }
+
+    public double getAbsolutePos(){
+        return thriftEncoder.getPosition();
     }
 
     public double getAbsoluteEncoderRad(){

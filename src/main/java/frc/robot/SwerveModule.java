@@ -16,6 +16,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxAnalogSensor.Mode;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -47,6 +48,12 @@ public class SwerveModule {
 
     private final boolean absoluteEncoderReversed;
     private final double absoluteEncoderOffsetRad;
+ 
+    private final SimpleMotorFeedforward feedForward = 
+    new SimpleMotorFeedforward(
+        ModuleConstants.turnkS, 
+        ModuleConstants.turnkV, 
+        ModuleConstants.turnkA);
 
     private Rotation2d lastAngle;
     
@@ -78,6 +85,8 @@ public class SwerveModule {
         turnEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderRot2Rad);
         turnEncoder.setVelocityConversionFactor(ModuleConstants.kTurningEncoderRPM2RadPerSec);
 
+        thriftEncoder.setPositionConversionFactor(ModuleConstants.kAbsoluteEncoderVolts2Rad);
+
         driveSparkController = driveMotor.getPIDController();
         turnSparkController = turnMotor.getPIDController();
 
@@ -91,7 +100,7 @@ public class SwerveModule {
         turnSparkController.setD(ModuleConstants.turnkD);
         turnSparkController.setFF(ModuleConstants.turnkFF);
 
-        //turnSparkController.setFeedbackDevice(thriftEncoder);
+        turnSparkController.setFeedbackDevice(thriftEncoder);
 
         turnController = new PIDController(ModuleConstants.kPTurning, 0, 0);
         turnController.enableContinuousInput(-Math.PI, Math.PI);
@@ -118,10 +127,7 @@ public class SwerveModule {
     }
 
     public double getAbsoluteEncoderRad(){
-        double angle = thriftEncoder.getVoltage() / RobotController.getVoltage3V3();
-        angle *= 2.0 * Math.PI;
-        angle -= absoluteEncoderOffsetRad;
-        return angle * (absoluteEncoderReversed ? -1.0 : 1.0);
+        return thriftEncoder.getPosition();
     }
 
     public void resetEncoders(){

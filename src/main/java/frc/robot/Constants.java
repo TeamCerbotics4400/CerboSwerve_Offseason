@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.RobotController;
 import team4400.Util.SwerveModuleConstants;
 
 /**
@@ -36,6 +37,8 @@ public final class Constants {
     public static final double kTurningEncoderRot2Rad = kTurningMotorGearRatio * 2 * Math.PI;
     public static final double kDriveEncoderRPM2MeterPerSec = kDriveEncoderRot2Meter / 60;
     public static final double kTurningEncoderRPM2RadPerSec = kTurningEncoderRot2Rad / 60;
+    public static final double kAbsoluteEncoderVolts2Rad = (1 / RobotController.getVoltage3V3()) 
+                                                                                  * 2.0 * Math.PI;
     public static final double kPTurning = 0.5;
     
     public static final double drivekP = 0,
@@ -43,10 +46,13 @@ public final class Constants {
                                drivekD = 0,
                                drivekFF = 0;
     
-    public static final double turnkP = 0.13,
+    public static final double turnkP = 0.01,
                                turnkI = 0,
                                turnkD = 0,
-                               turnkFF = 0;
+                               turnkFF = 0,
+                               turnkS = 0.18136,
+                               turnkV = 0.003191,
+                               turnkA = 0.00011063;
   }
 
   public static final class DriveConstants{
@@ -142,10 +148,10 @@ public final class Constants {
     //- / -
     //+ / -
     public static final SwerveDriveKinematics kSwerveKinematics = new SwerveDriveKinematics(
-      new Translation2d(kWheelBase / 3, kTrackWidth / 2),
-      new Translation2d(-kWheelBase / 3, kTrackWidth / 2),
-      new Translation2d(-kWheelBase / 3, -kTrackWidth / 2),
-      new Translation2d(kWheelBase / 3, -kTrackWidth / 2 ));
+      new Translation2d(kWheelBase / 2, kTrackWidth / 2),
+      new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
+      new Translation2d(-kWheelBase / 2, -kTrackWidth / 2),
+      new Translation2d(kWheelBase / 2, -kTrackWidth / 2 ));
 
       /*
        * Kinematics order:

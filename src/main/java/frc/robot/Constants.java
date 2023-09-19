@@ -39,6 +39,7 @@ public final class Constants {
     public static final double kTurningEncoderRPM2RadPerSec = kTurningEncoderRot2Rad / 60;
     public static final double kAbsoluteEncoderVolts2Rad = (1 / RobotController.getVoltage3V3()) 
                                                             * Math.PI * 2.0;
+    public static final double kNewAbsoluteVolts2Deg = 108.27067565917969;
     public static final double kPTurning = 0.5; 
   }
 
@@ -77,7 +78,7 @@ public final class Constants {
       public static final boolean driveReversed = false;
       public static final boolean turnReversed = false;
       public static final boolean encoderReversed = false;
-      public static double encoderOffset = Units.degreesToRadians(201.0);//197.0;
+      public static double encoderOffset = 201.0; //1970;
 
       public static final SwerveModuleConstants CONSTANTS = 
       new SwerveModuleConstants(DRIVE_ID, TURN_ID, driveReversed, 
@@ -90,7 +91,7 @@ public final class Constants {
       public static final boolean driveReversed = false;
       public static final boolean turnReversed = false;
       public static final boolean encoderReversed = false;
-      public static double encoderOffset = Units.degreesToRadians(156.0);//153.0;
+      public static double encoderOffset = 156.0;//153.0;
 
       public static final SwerveModuleConstants CONSTANTS = 
       new SwerveModuleConstants(DRIVE_ID, TURN_ID, driveReversed, 
@@ -103,7 +104,7 @@ public final class Constants {
       public static final boolean driveReversed = true;
       public static final boolean turnReversed = false;
       public static final boolean encoderReversed = false;
-      public static double encoderOffset = Units.degreesToRadians(105.0);//284.0;
+      public static double encoderOffset = 105.0;//284.0;
 
       public static final SwerveModuleConstants CONSTANTS = 
       new SwerveModuleConstants(DRIVE_ID, TURN_ID, driveReversed, 
@@ -116,7 +117,7 @@ public final class Constants {
       public static final boolean driveReversed = true;
       public static final boolean turnReversed = false;
       public static final boolean encoderReversed = false;
-      public static double encoderOffset = Units.degreesToRadians(277.0);//33.0;// Algo raro
+      public static double encoderOffset = 277.0;//33.0;// Algo raro
 
       public static final SwerveModuleConstants CONSTANTS = 
       new SwerveModuleConstants(DRIVE_ID, TURN_ID, driveReversed, 

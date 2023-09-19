@@ -66,7 +66,7 @@ public class SwerveModule {
         turnEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderRot2Rad);
         turnEncoder.setVelocityConversionFactor(ModuleConstants.kTurningEncoderRPM2RadPerSec);
 
-        thriftEncoder.setPositionConversionFactor(ModuleConstants.kAbsoluteEncoderVolts2Rad);
+        thriftEncoder.setPositionConversionFactor(ModuleConstants.kNewAbsoluteVolts2Deg);
 
         turnController = new PIDController(ModuleConstants.kPTurning, 0, 0);
         turnController.enableContinuousInput(-Math.PI, Math.PI);
@@ -96,19 +96,19 @@ public class SwerveModule {
     }
 
     public double getAbsolutePos(){
-        return thriftEncoder.getPosition();
+        return thriftEncoder.getPosition(); //- absoluteEncoderOffsetRad;
     }
 
     public double getAbsoluteEncoderRad(){
         double angle = thriftEncoder.getVoltage() / RobotController.getVoltage3V3();
         angle *= 2.0 * Math.PI;
-        angle -= absoluteEncoderOffsetRad;
+        angle -= Units.degreesToRadians(absoluteEncoderOffsetRad);
         return angle * (absoluteEncoderReversed ? -1.0 : 1.0);
     }
 
     public void resetEncoders(){
         driveEncoder.setPosition(0);
-        turnEncoder.setPosition(getAbsoluteEncoderRad());
+        turnEncoder.setPosition(getAbsolutePos());
     }
 
     public SwerveModuleState getState(){

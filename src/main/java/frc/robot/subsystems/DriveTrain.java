@@ -61,14 +61,14 @@ public class DriveTrain extends SubsystemBase {
 
     for(SwerveModule mod : swerveModules){
       SmartDashboard.putNumber("Module [" + mod.moduleNumber + "] Integrated Encoder", 
-      Units.radiansToDegrees(swerveModules[mod.moduleNumber].getTurningPosition()));
+      swerveModules[mod.moduleNumber].getTurningPosition());
     }
 
     SmartDashboard.putNumber("IMU Angle", getHeading());  
     
     for(SwerveModule mod : swerveModules){
-      SmartDashboard.putNumber("Module [" + mod.moduleNumber + "] Rev Absolute Pose", 
-      Units.radiansToDegrees(swerveModules[mod.moduleNumber].getAbsolutePos()));
+      SmartDashboard.putNumber("Module [" + mod.moduleNumber + "] Rev Pose", 
+      (swerveModules[mod.moduleNumber].getAbsolutePos()));
     }    
 
     for(SwerveModule mod : swerveModules){

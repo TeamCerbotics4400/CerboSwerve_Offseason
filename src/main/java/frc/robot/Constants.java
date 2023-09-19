@@ -8,7 +8,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotController;
-import team4400.Util.SwerveModuleConstants;
+import team4400.Util.Swerve.SwerveModuleConstants;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -72,17 +72,20 @@ public final class Constants {
      *                   B
      */
 
+     //TODO: If Encoders connected to RIO, check new ports and check for new Offsets;
+
     public static final class Module0{
       public static final int DRIVE_ID = 16;
       public static final int TURN_ID = 17;
       public static final boolean driveReversed = false;
       public static final boolean turnReversed = false;
+      public static final int ABSOLUTE_ID = 0; //Check Analog Ports
       public static final boolean encoderReversed = false;
       public static double encoderOffset = 201.0; //1970;
 
       public static final SwerveModuleConstants CONSTANTS = 
       new SwerveModuleConstants(DRIVE_ID, TURN_ID, driveReversed, 
-      turnReversed, encoderReversed, encoderOffset);
+      turnReversed, ABSOLUTE_ID, encoderReversed, encoderOffset);
     }
 
     public static final class Module1{
@@ -90,12 +93,13 @@ public final class Constants {
       public static final int TURN_ID = 3;
       public static final boolean driveReversed = false;
       public static final boolean turnReversed = false;
+      public static final int ABSOLUTE_ID = 1;
       public static final boolean encoderReversed = false;
       public static double encoderOffset = 156.0;//153.0;
 
       public static final SwerveModuleConstants CONSTANTS = 
       new SwerveModuleConstants(DRIVE_ID, TURN_ID, driveReversed, 
-      turnReversed, encoderReversed, encoderOffset);
+      turnReversed, ABSOLUTE_ID, encoderReversed, encoderOffset);
     }
 
     public static final class Module2{
@@ -103,12 +107,13 @@ public final class Constants {
       public static final int TURN_ID = 1;
       public static final boolean driveReversed = true;
       public static final boolean turnReversed = false;
+      public static final int ABSOLUTE_ID = 2;
       public static final boolean encoderReversed = false;
       public static double encoderOffset = 105.0;//284.0;
 
       public static final SwerveModuleConstants CONSTANTS = 
       new SwerveModuleConstants(DRIVE_ID, TURN_ID, driveReversed, 
-      turnReversed, encoderReversed, encoderOffset);
+      turnReversed, ABSOLUTE_ID, encoderReversed, encoderOffset);
     }
 
     public static final class Module3{
@@ -116,12 +121,13 @@ public final class Constants {
       public static final int TURN_ID = 19;
       public static final boolean driveReversed = true;
       public static final boolean turnReversed = false;
+      public static final int ABSOLUTE_ID = 3;
       public static final boolean encoderReversed = false;
       public static double encoderOffset = 277.0;//33.0;// Algo raro
 
       public static final SwerveModuleConstants CONSTANTS = 
       new SwerveModuleConstants(DRIVE_ID, TURN_ID, driveReversed, 
-      turnReversed, encoderReversed, encoderOffset);
+      turnReversed, ABSOLUTE_ID, encoderReversed, encoderOffset);
     }
 
     public static final int IMU_ID = 13;

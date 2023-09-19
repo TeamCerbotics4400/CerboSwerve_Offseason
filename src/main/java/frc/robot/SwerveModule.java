@@ -15,13 +15,14 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.AnalogEncoder;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ModuleConstants;
-import team4400.Util.RevModuleOptimizer;
-import team4400.Util.SwerveModuleConstants;
+import team4400.Util.Swerve.RevModuleOptimizer;
+import team4400.Util.Swerve.SwerveModuleConstants;
 
 /** Add your docs here. */
 public class SwerveModule {
@@ -34,12 +35,12 @@ public class SwerveModule {
     private final RelativeEncoder driveEncoder;
     private final RelativeEncoder turnEncoder;
 
-    private final SparkMaxAnalogSensor thriftEncoder;
+    private final AnalogEncoder absoluteEncoder;
 
     private final PIDController turnController;
 
     private final boolean absoluteEncoderReversed;
-    private final double absoluteEncoderOffsetRad;
+    private final double absoluteEncoderOffset;
     
     public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants){
 
@@ -48,9 +49,9 @@ public class SwerveModule {
         driveMotor = new CANSparkMax(moduleConstants.driveMotorID, MotorType.kBrushless);
         turnMotor = new CANSparkMax(moduleConstants.turnMotorID, MotorType.kBrushless);
 
-        absoluteEncoderOffsetRad = moduleConstants.angleOffset;
+        absoluteEncoderOffset = moduleConstants.angleOffset;
         absoluteEncoderReversed = moduleConstants.absoluteEncoderReversed;
-        thriftEncoder = turnMotor.getAnalog(Mode.kAbsolute);
+        absoluteEncoder = new AnalogEncoder(moduleConstants.absoluteEncoderID);
 
         driveMotor.restoreFactoryDefaults();
         turnMotor.restoreFactoryDefaults();
@@ -65,8 +66,6 @@ public class SwerveModule {
         driveEncoder.setVelocityConversionFactor(ModuleConstants.kDriveEncoderRPM2MeterPerSec);
         turnEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderRot2Rad);
         turnEncoder.setVelocityConversionFactor(ModuleConstants.kTurningEncoderRPM2RadPerSec);
-
-        thriftEncoder.setPositionConversionFactor(ModuleConstants.kNewAbsoluteVolts2Deg);
 
         turnController = new PIDController(ModuleConstants.kPTurning, 0, 0);
         turnController.enableContinuousInput(-Math.PI, Math.PI);
@@ -91,24 +90,26 @@ public class SwerveModule {
         return turnEncoder.getVelocity();
     }
 
-    public double getAbsoluteVoltage(){
-        return thriftEncoder.getVoltage();
+    public double getAbsoluteAngle(){
+        double rawAngle = 
+                (absoluteEncoder.getAbsolutePosition() * 360 - absoluteEncoderOffset) % 360;
+        double angle;
+        if(rawAngle > 180.0 && rawAngle < 360.0){
+            angle = -180 + rawAngle % 180.0;
+        } else {
+            angle = rawAngle;
+        }
+
+        return angle;
     }
 
-    public double getAbsolutePos(){
-        return thriftEncoder.getPosition(); //- absoluteEncoderOffsetRad;
-    }
-
-    public double getAbsoluteEncoderRad(){
-        double angle = thriftEncoder.getVoltage() / RobotController.getVoltage3V3();
-        angle *= 2.0 * Math.PI;
-        angle -= Units.degreesToRadians(absoluteEncoderOffsetRad);
-        return angle * (absoluteEncoderReversed ? -1.0 : 1.0);
+    public double absoluteAngleToRadians(){
+        return getAbsoluteAngle() * Math.PI / 180.0;
     }
 
     public void resetEncoders(){
         driveEncoder.setPosition(0);
-        turnEncoder.setPosition(getAbsolutePos());
+        //turnEncoder.setPosition(getAbsolutePos());
     }
 
     public SwerveModuleState getState(){

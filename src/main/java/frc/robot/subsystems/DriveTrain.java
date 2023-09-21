@@ -56,12 +56,17 @@ public class DriveTrain extends SubsystemBase {
 
     for(SwerveModule mod : swerveModules){
       SmartDashboard.putNumber("Module [" + mod.moduleNumber + "] Absolute Encoder", 
-      Units.radiansToDegrees(swerveModules[mod.moduleNumber].getAbsoluteAngle()));
+      swerveModules[mod.moduleNumber].getAbsoluteAngle());
     }
 
     for(SwerveModule mod : swerveModules){
       SmartDashboard.putNumber("Module [" + mod.moduleNumber + "] Integrated Encoder", 
       swerveModules[mod.moduleNumber].getTurningPosition());
+    }
+
+    for(SwerveModule mod : swerveModules){
+      SmartDashboard.putNumber("Module [" + mod.moduleNumber + "] Raw Absolute", 
+      swerveModules[mod.moduleNumber].getRawAbsoluteAngle());
     }
 
     SmartDashboard.putNumber("IMU Angle", getHeading());  
@@ -92,12 +97,12 @@ public class DriveTrain extends SubsystemBase {
     return Rotation2d.fromDegrees(getHeading());
   }
 
-  public void setModuleStates(SwerveModuleState[] desiredStates){
+  public void setModuleStates(SwerveModuleState[] desiredStates, boolean isOpenLoop){
     SwerveDriveKinematics.desaturateWheelSpeeds(
       desiredStates, 
       DriveConstants.kPhysicalMaxSpeedMetersPerSecond);
     for(SwerveModule mod : swerveModules){
-      mod.setDesiredState(desiredStates[mod.moduleNumber]);
+      mod.setDesiredState(desiredStates[mod.moduleNumber], isOpenLoop);
     }
   }
 

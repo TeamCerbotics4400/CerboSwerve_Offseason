@@ -93,7 +93,7 @@ public final class Constants {
       public static final int TURN_ID = 3;
       public static final boolean driveReversed = false;
       public static final boolean turnReversed = false;
-      public static final int ABSOLUTE_ID = 1;
+      public static final int ABSOLUTE_ID = 2;
       public static final boolean encoderReversed = false;
       public static double encoderOffset = 156.0;//153.0;
 
@@ -107,7 +107,7 @@ public final class Constants {
       public static final int TURN_ID = 1;
       public static final boolean driveReversed = true;
       public static final boolean turnReversed = false;
-      public static final int ABSOLUTE_ID = 2;
+      public static final int ABSOLUTE_ID = 1;
       public static final boolean encoderReversed = false;
       public static double encoderOffset = 105.0;//284.0;
 

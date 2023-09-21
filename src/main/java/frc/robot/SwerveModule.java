@@ -6,17 +6,16 @@ package frc.robot;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxAnalogSensor;
+import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.SparkMaxAnalogSensor.Mode;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.AnalogEncoder;
-import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
@@ -37,6 +36,9 @@ public class SwerveModule {
 
     private final AnalogEncoder absoluteEncoder;
 
+    private final SimpleMotorFeedforward feedForward;
+
+    private final SparkMaxPIDController driveController;
     private final PIDController turnController;
 
     private final boolean absoluteEncoderReversed;
@@ -67,6 +69,15 @@ public class SwerveModule {
         turnEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderRot2Rad);
         turnEncoder.setVelocityConversionFactor(ModuleConstants.kTurningEncoderRPM2RadPerSec);
 
+        feedForward = new SimpleMotorFeedforward(0, 0, 0);
+
+        driveController = driveMotor.getPIDController();
+
+        driveController.setP(0);
+        driveController.setI(0);
+        driveController.setD(0);
+        driveController.setFF(0);
+
         turnController = new PIDController(ModuleConstants.kPTurning, 0, 0);
         turnController.enableContinuousInput(-Math.PI, Math.PI);
 
@@ -88,6 +99,10 @@ public class SwerveModule {
 
     public double getTurningVelocity(){
         return turnEncoder.getVelocity();
+    }
+
+    public double getRawAbsoluteAngle(){
+        return absoluteEncoder.getAbsolutePosition();
     }
 
     public double getAbsoluteAngle(){
@@ -116,20 +131,35 @@ public class SwerveModule {
         return new SwerveModuleState(getDriveVelocity(), new Rotation2d(getTurningPosition()));
     }
 
-    public void setDesiredState(SwerveModuleState state){
+    public void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop){
+        if(isOpenLoop){
+            double percentOutput = 
+                desiredState.speedMetersPerSecond / DriveConstants.kPhysicalMaxSpeedMetersPerSecond;
+            driveMotor.set(percentOutput);
+        } else {
+            driveController.setReference(desiredState.speedMetersPerSecond, ControlType.kVelocity, 
+            0, feedForward.calculate(desiredState.speedMetersPerSecond));
+        }
+    }
 
-        if(Math.abs(state.speedMetersPerSecond) < 0.001){
+    public void setAngle(SwerveModuleState desiredState){
+        turnMotor.set(turnController.calculate(absoluteAngleToRadians(), 
+                        desiredState.angle.getRadians()));
+    }
+
+    public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop){
+
+        if(Math.abs(desiredState.speedMetersPerSecond) < 0.001){
             stop();
             return;
         }
 
-        state = RevModuleOptimizer.optimize(state, getState().angle);
-        driveMotor.set(state.speedMetersPerSecond 
-        / DriveConstants.kPhysicalMaxSpeedMetersPerSecond);//Check when the swerve chassis is done
-        turnMotor.set(turnController.calculate(getTurningPosition(), state.angle.getRadians()));
+        desiredState = 
+            RevModuleOptimizer.optimize(desiredState, new Rotation2d(absoluteAngleToRadians()));
 
-        SmartDashboard.putString(
-            "Swerve [" + moduleNumber + "] state", state.toString());
+        
+        setAngle(desiredState);
+        setSpeed(desiredState, isOpenLoop);  
     }
 
     public SwerveModulePosition getPosition(){

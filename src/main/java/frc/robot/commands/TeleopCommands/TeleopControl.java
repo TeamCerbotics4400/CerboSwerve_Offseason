@@ -77,7 +77,7 @@ public class TeleopControl extends CommandBase {
     SwerveModuleState[] moduleStates = 
             DriveConstants.kSwerveKinematics.toSwerveModuleStates(chassisSpeeds);
     
-    m_drive.setModuleStates(moduleStates, true);
+    m_drive.setModuleStates(moduleStates);
     
     SmartDashboard.putBoolean("Is Field Oriented", fieldOriented.get());
   }

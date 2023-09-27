@@ -32,15 +32,19 @@ public final class Constants {
     public static final double kWheelDiameterMeters = Units.inchesToMeters(4);
     public static final double kDriveMotorGearRatio = 1 / 5.50; //Drive Gear Ratio, 5.50 or 6.55
     public static final double kTurningMotorGearRatio = 1 / 10.29; //Turning Gear Ratio
+    public static final double kTurningEncoderRot2Rad = kTurningMotorGearRatio * 2 * Math.PI;
     public static final double kDriveEncoderRot2Meter = 
                                 kDriveMotorGearRatio * Math.PI * kWheelDiameterMeters;
-    public static final double kTurningEncoderRot2Rad = kTurningMotorGearRatio * 2 * Math.PI;
     public static final double kDriveEncoderRPM2MeterPerSec = kDriveEncoderRot2Meter / 60;
-    public static final double kTurningEncoderRPM2RadPerSec = kTurningEncoderRot2Rad / 60;
-    public static final double kAbsoluteEncoderVolts2Rad = (1 / RobotController.getVoltage3V3()) 
-                                                            * Math.PI * 2.0;
-    public static final double kNewAbsoluteVolts2Deg = 108.27067565917969;
-    public static final double kPTurning = 0.5; 
+    public static final double kP = 0,
+                               kI = 0,
+                               kD = 0,
+                               kFF = 0,
+                               kS = 0,
+                               kV = 0,
+                               kA = 0;
+    public static final double kPTurning = 0.5;//0.096172; 
+    //public static final double kDTurning = 0.0046987;
   }
 
   public static final class DriveConstants{
@@ -79,9 +83,9 @@ public final class Constants {
       public static final int TURN_ID = 17;
       public static final boolean driveReversed = false;
       public static final boolean turnReversed = false;
-      public static final int ABSOLUTE_ID = 0; //Check Analog Ports
+      public static final int ABSOLUTE_ID = 3; //Check Analog Ports
       public static final boolean encoderReversed = false;
-      public static double encoderOffset = 201.0; //1970;
+      public static double encoderOffset = -163.20;//201.0; //1970;
 
       public static final SwerveModuleConstants CONSTANTS = 
       new SwerveModuleConstants(DRIVE_ID, TURN_ID, driveReversed, 
@@ -95,7 +99,7 @@ public final class Constants {
       public static final boolean turnReversed = false;
       public static final int ABSOLUTE_ID = 2;
       public static final boolean encoderReversed = false;
-      public static double encoderOffset = 156.0;//153.0;
+      public static double encoderOffset = 152.60;//156.0;//153.0;
 
       public static final SwerveModuleConstants CONSTANTS = 
       new SwerveModuleConstants(DRIVE_ID, TURN_ID, driveReversed, 
@@ -109,7 +113,7 @@ public final class Constants {
       public static final boolean turnReversed = false;
       public static final int ABSOLUTE_ID = 1;
       public static final boolean encoderReversed = false;
-      public static double encoderOffset = 105.0;//284.0;
+      public static double encoderOffset = 103.25;//105.0;//284.0;
 
       public static final SwerveModuleConstants CONSTANTS = 
       new SwerveModuleConstants(DRIVE_ID, TURN_ID, driveReversed, 
@@ -121,9 +125,9 @@ public final class Constants {
       public static final int TURN_ID = 19;
       public static final boolean driveReversed = true;
       public static final boolean turnReversed = false;
-      public static final int ABSOLUTE_ID = 3;
+      public static final int ABSOLUTE_ID = 0;
       public static final boolean encoderReversed = false;
-      public static double encoderOffset = 277.0;//33.0;// Algo raro
+      public static double encoderOffset = 91.24;//277.0;//33.0;// Algo raro
 
       public static final SwerveModuleConstants CONSTANTS = 
       new SwerveModuleConstants(DRIVE_ID, TURN_ID, driveReversed, 
@@ -142,10 +146,10 @@ public final class Constants {
     //- / -
     //+ / -
     public static final SwerveDriveKinematics kSwerveKinematics = new SwerveDriveKinematics(
-      new Translation2d(kWheelBase / 3, kTrackWidth / 2),
-      new Translation2d(-kWheelBase / 3, kTrackWidth / 2),
-      new Translation2d(-kWheelBase / 3, -kTrackWidth / 2),
-      new Translation2d(kWheelBase / 3, -kTrackWidth / 2 ));
+      new Translation2d(kWheelBase / 2, kTrackWidth / 2),
+      new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
+      new Translation2d(-kWheelBase / 2, -kTrackWidth / 2),
+      new Translation2d(kWheelBase / 2, -kTrackWidth / 2 ));
 
       /*
        * Kinematics order:

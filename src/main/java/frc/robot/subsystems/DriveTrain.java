@@ -59,6 +59,16 @@ public class DriveTrain extends SubsystemBase {
       swerveModules[mod.moduleNumber].getAngleDeegrees());
     }
 
+    for(SwerveModule mod : swerveModules){
+      SmartDashboard.putNumber("Module [" + mod.moduleNumber + "] Absolute Radians", 
+      swerveModules[mod.moduleNumber].turningDeegreesToRadians());
+    }
+
+    for(SwerveModule mod : swerveModules){
+      SmartDashboard.putNumber("Module [" + mod.moduleNumber + "] Integrated Encoder", 
+      Units.radiansToDegrees(swerveModules[mod.moduleNumber].getTurnPosition()));
+    }
+
     SmartDashboard.putNumber("IMU Angle", getHeading());  
   
   }
@@ -68,7 +78,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public double getHeading(){
-    return Math.IEEEremainder(-imu.getYaw(), 360);
+    return Math.IEEEremainder(imu.getYaw(), 360);
   }
 
   public void resetModuleEncoders(){

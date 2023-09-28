@@ -82,7 +82,7 @@ public final class Constants {
       public static final int DRIVE_ID = 16;
       public static final int TURN_ID = 17;
       public static final boolean driveReversed = false;
-      public static final boolean turnReversed = false;
+      public static final boolean turnReversed = true;
       public static final int ABSOLUTE_ID = 3; //Check Analog Ports
       public static final boolean encoderReversed = false;
       public static double encoderOffset = -163.20;//201.0; //1970;
@@ -96,7 +96,7 @@ public final class Constants {
       public static final int DRIVE_ID = 4;
       public static final int TURN_ID = 3;
       public static final boolean driveReversed = false;
-      public static final boolean turnReversed = false;
+      public static final boolean turnReversed = true;
       public static final int ABSOLUTE_ID = 2;
       public static final boolean encoderReversed = false;
       public static double encoderOffset = 152.60;//156.0;//153.0;
@@ -110,7 +110,7 @@ public final class Constants {
       public static final int DRIVE_ID = 2;
       public static final int TURN_ID = 1;
       public static final boolean driveReversed = true;
-      public static final boolean turnReversed = false;
+      public static final boolean turnReversed = true;
       public static final int ABSOLUTE_ID = 1;
       public static final boolean encoderReversed = false;
       public static double encoderOffset = 103.25;//105.0;//284.0;
@@ -123,8 +123,8 @@ public final class Constants {
     public static final class Module3{
       public static final int DRIVE_ID = 18;
       public static final int TURN_ID = 19;
-      public static final boolean driveReversed = true;
-      public static final boolean turnReversed = false;
+      public static final boolean driveReversed = false;
+      public static final boolean turnReversed = true;
       public static final int ABSOLUTE_ID = 0;
       public static final boolean encoderReversed = false;
       public static double encoderOffset = 91.24;//277.0;//33.0;// Algo raro
@@ -146,10 +146,10 @@ public final class Constants {
     //- / -
     //+ / -
     public static final SwerveDriveKinematics kSwerveKinematics = new SwerveDriveKinematics(
-      new Translation2d(kWheelBase / 2, kTrackWidth / 2),
-      new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
+      new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
       new Translation2d(-kWheelBase / 2, -kTrackWidth / 2),
-      new Translation2d(kWheelBase / 2, -kTrackWidth / 2 ));
+      new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
+      new Translation2d(kWheelBase / 2, kTrackWidth / 2 ));
 
       /*
        * Kinematics order:
@@ -167,9 +167,9 @@ public final class Constants {
     public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
 
     public static final double kTeleDriveMaxSpeedMetersPerSecond = 
-                kPhysicalMaxSpeedMetersPerSecond / 4;
+                kPhysicalMaxSpeedMetersPerSecond / 4; //TODO: TeleOp drive speed
     public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = 
-                kPhysicalMaxAngularSpeedRadiansPerSecond / 4;
+                kPhysicalMaxAngularSpeedRadiansPerSecond / 4; //TODO: TeleOp angle speed
     public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3;
     public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
   }

@@ -13,7 +13,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -57,16 +56,6 @@ public class DriveTrain extends SubsystemBase {
     for(SwerveModule mod : swerveModules){
       SmartDashboard.putNumber("Module [" + mod.moduleNumber + "] Absolute Encoder", 
       swerveModules[mod.moduleNumber].getAngleDeegrees());
-    }
-
-    for(SwerveModule mod : swerveModules){
-      SmartDashboard.putNumber("Module [" + mod.moduleNumber + "] Absolute Radians", 
-      swerveModules[mod.moduleNumber].turningDeegreesToRadians());
-    }
-
-    for(SwerveModule mod : swerveModules){
-      SmartDashboard.putNumber("Module [" + mod.moduleNumber + "] Integrated Encoder", 
-      Units.radiansToDegrees(swerveModules[mod.moduleNumber].getTurnPosition()));
     }
 
     SmartDashboard.putNumber("IMU Angle", getHeading());  

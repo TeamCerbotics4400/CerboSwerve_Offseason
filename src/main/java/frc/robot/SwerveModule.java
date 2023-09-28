@@ -34,7 +34,6 @@ public class SwerveModule {
     private final CANSparkMax turnMotor;
 
     private final RelativeEncoder driveEncoder;
-    private final RelativeEncoder turnEncoder;
 
     private final AnalogEncoder absoluteEncoder;
 
@@ -43,7 +42,8 @@ public class SwerveModule {
     private final SparkMaxPIDController driveController;
     private final PIDController turnController;
 
-    private final boolean absoluteEncoderReversed;
+    //In case we have an Encoder turning to the opposite direction
+    private final boolean absoluteEncoderReversed; 
     private final double absoluteEncoderOffset;
 
     private Rotation2d lastAngle;
@@ -69,11 +69,9 @@ public class SwerveModule {
         turnMotor.setIdleMode(IdleMode.kCoast);
 
         driveEncoder = driveMotor.getEncoder();
-        turnEncoder = turnMotor.getEncoder();
 
         driveEncoder.setPositionConversionFactor(ModuleConstants.kDriveEncoderRot2Meter);
         driveEncoder.setVelocityConversionFactor(ModuleConstants.kDriveEncoderRPM2MeterPerSec);
-        turnEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderRot2Rad);
 
         feedForward = new 
             SimpleMotorFeedforward(ModuleConstants.kS, ModuleConstants.kV, ModuleConstants.kA);
@@ -102,10 +100,6 @@ public class SwerveModule {
         return driveEncoder.getVelocity();
     }
 
-    public double getTurnPosition(){
-        return turnEncoder.getPosition();
-    }
-
     public double getAngleDeegrees(){
         double rawAngle = 
                 (absoluteEncoder.getAbsolutePosition() * 360 - absoluteEncoderOffset) % 360;
@@ -125,8 +119,7 @@ public class SwerveModule {
 
     public void resetEncoders(){
         driveEncoder.setPosition(0);
-        //absoluteEncoder.reset();
-        turnEncoder.setPosition(turningDeegreesToRadians());
+        absoluteEncoder.reset();
     }
 
     public SwerveModuleState getState(){

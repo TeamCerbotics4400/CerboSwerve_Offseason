@@ -133,7 +133,7 @@ public class SwerveModule {
         return new SwerveModuleState(getDriveVelocity(), new Rotation2d(turningDeegreesToRadians()));
     }
 
-    /*public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop){
+    public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop){
 
         desiredState = 
             RevModuleOptimizer.optimize(desiredState, getState().angle);
@@ -161,11 +161,11 @@ public class SwerveModule {
         (DriveConstants.kPhysicalMaxSpeedMetersPerSecond * 0.01)) ? lastAngle : desiredState.angle;
 
         turnMotor
-        .set(turnController.calculate(getAngleDeegrees(), desiredState.angle.getDegrees()));
+        .set(turnController.calculate(turningDeegreesToRadians(), desiredState.angle.getRadians()));
         lastAngle = angle;
-    }*/
+    }
 
-    public void setDesiredState(SwerveModuleState state){
+    /*public void setDesiredState(SwerveModuleState state){
 
         if(Math.abs(state.speedMetersPerSecond) < 0.001){
             stop();
@@ -179,7 +179,7 @@ public class SwerveModule {
 
         SmartDashboard.putString(
             "Swerve [" + moduleNumber + "] state", state.toString());
-    }
+    }*/
 
     public SwerveModulePosition getPosition(){
         return new SwerveModulePosition(

@@ -25,7 +25,7 @@ public class WristSubsystem extends ProfiledPIDSubsystem {
 
   private RelativeEncoder wristEncoder = wristMotor.getEncoder();
 
-  private DigitalInput hallEffectSensor = new DigitalInput(1);
+  //private DigitalInput hallEffectSensor = new DigitalInput(1);
 
   private final ArmFeedforward m_feedforward =
       new ArmFeedforward(
@@ -33,7 +33,7 @@ public class WristSubsystem extends ProfiledPIDSubsystem {
           WristConstants.kV, WristConstants.kA);
 
   /** Create a new ArmSubsystem. */
-  //Relacion: 210.0 : 1.00
+  //Wrist Gearbox 210:1 
   public WristSubsystem() {
     super(
         new ProfiledPIDController(
@@ -80,12 +80,6 @@ public class WristSubsystem extends ProfiledPIDSubsystem {
 
   public void resetEncoder(){
     wristEncoder.setPosition(0);
-  }
-
-  public void setEncoderZero(){
-    if(!hallEffectSensor.get() && wristEncoder.getVelocity() < 0.1){
-      wristEncoder.setPosition(0);
-    }
   }
 
   @Override

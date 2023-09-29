@@ -46,6 +46,7 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
 
   DoubleArrayLogEntry arm3dPose;
 
+  //Arm Gearbox 32:1 (The big sprokets)
   /** Create a new ArmSubsystem. */
   public ArmSubsystem() {
     super(

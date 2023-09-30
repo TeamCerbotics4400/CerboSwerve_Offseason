@@ -9,11 +9,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.util.datalog.DoubleArrayLogEntry;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import frc.robot.Constants.ArmConstants;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -40,11 +36,7 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
           ArmConstants.kS, ArmConstants.kG,
           ArmConstants.kV, ArmConstants.kA);
 
-  private static final Translation2d rootPosition = new Translation2d(0.0, 0.0);
-
   boolean onTarget;
-
-  DoubleArrayLogEntry arm3dPose;
 
   //Arm Gearbox 32:1 (The big sprokets)
   /** Create a new ArmSubsystem. */
@@ -67,8 +59,8 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
     leftMotor.restoreFactoryDefaults();
     rightMotor.restoreFactoryDefaults();
 
-    leftMotor.setInverted(false);
-    rightMotor.follow(leftMotor, true);
+    leftMotor.setInverted(true);
+    rightMotor.follow(leftMotor, false);
 
     leftMotor.setSmartCurrentLimit(80);
     rightMotor.setSmartCurrentLimit(80);
@@ -110,20 +102,6 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
                 },
                 this);
     return ejecutable;
-  }
-
-  public Pose3d getSuperStructurePose(){
-    return new Pose3d(0,0.0, 0.0, new Rotation3d(0.0, 0.0, 0.0));
-  }
-
-  public Pose3d getArm3dPose(){
-    return new Pose3d(rootPosition.getX(), 0.0, rootPosition.getY(), 
-                          new Rotation3d(0.0, getMeasurement(), 0.0));
-  }
-
-  public double[] posetoArray(Pose3d pose){
-    return new double[] {pose.getX(), pose.getY(), pose.getZ(), 
-      pose.getRotation().getX(), pose.getRotation().getY(), pose.getRotation().getZ()};
   }
 
   //For use in autonomous methods to shoot after the Arm is in position

@@ -18,6 +18,8 @@ import team4400.Util.Swerve.SwerveModuleConstants;
  * constants are needed, to reduce verbosity.
  */
 
+ //TODO: VALUES MAY NOT BE THE SAME FOR EACH ROBOT, CHANGE ACCORDINGLY
+
  /*************** DRIVE ****************/
 
  /*
@@ -50,8 +52,6 @@ public final class Constants {
      * https://github.com/first95/FRC2023/blob/f0e881c39ade544b3b71936995f7f075105f0b93/Clarke/src/main/java/frc/robot/Constants.java#LL136C16-L136C23
      * Gives us a tool for a cleaner and readable swerve code
     */
-
-    //TODO: PLACEHOLDER VALUES
 
     /*    
      *                   F             
@@ -138,11 +138,7 @@ public final class Constants {
     public static final double kTrackWidth = 0.5842;
     //Distance between front and back wheels
     public static final double kWheelBase = 0.6604;
-    //Original
-    //+ / +
-    //- / +
-    //- / -
-    //+ / -
+   
     public static final SwerveDriveKinematics kSwerveKinematics = new SwerveDriveKinematics(
       new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
       new Translation2d(-kWheelBase / 2, -kTrackWidth / 2),
@@ -161,6 +157,7 @@ public final class Constants {
     * 5.50 = 18.01 ft/s
     * 6.55 = 15.12 ft/s
     */
+    
     public static final double kPhysicalMaxSpeedMetersPerSecond = Units.feetToMeters(18.01);
     public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
 
@@ -171,7 +168,7 @@ public final class Constants {
     public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3;
     public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
   }
-  
+
   /*************** MISC ****************/
 
   public static final class VisionConstants {

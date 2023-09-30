@@ -131,7 +131,6 @@ public class SwerveModule {
         desiredState = 
             RevModuleOptimizer.optimize(desiredState, getState().angle);
 
-
         setAngle(desiredState);
         setSpeed(desiredState, isOpenLoop);  
 
@@ -157,22 +156,6 @@ public class SwerveModule {
         .set(turnController.calculate(turningDeegreesToRadians(), desiredState.angle.getRadians()));
         lastAngle = angle;
     }
-
-    /*public void setDesiredState(SwerveModuleState state){
-
-        if(Math.abs(state.speedMetersPerSecond) < 0.001){
-            stop();
-            return;
-        }
-
-        state = RevModuleOptimizer.optimize(state, getState().angle);
-        driveMotor.set(state.speedMetersPerSecond 
-        / DriveConstants.kPhysicalMaxSpeedMetersPerSecond);//Check when the swerve chassis is done
-        turnMotor.set(turnController.calculate(turningDeegreesToRadians(), state.angle.getRadians()));
-
-        SmartDashboard.putString(
-            "Swerve [" + moduleNumber + "] state", state.toString());
-    }*/
 
     public SwerveModulePosition getPosition(){
         return new SwerveModulePosition(

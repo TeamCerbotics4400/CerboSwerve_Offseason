@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
@@ -38,7 +39,7 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
 
   boolean onTarget;
 
-  //Arm Gearbox 32:1 (The big sprokets)
+  //Arm Gearbox 32:1 (The big sprockets)
   /** Create a new ArmSubsystem. */
   public ArmSubsystem() {
     super(
@@ -60,7 +61,9 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
     rightMotor.restoreFactoryDefaults();
 
     leftMotor.setInverted(true);
-    rightMotor.follow(leftMotor, false);
+    rightMotor.setInverted(false);
+
+    rightMotor.follow(leftMotor);
 
     leftMotor.setSmartCurrentLimit(80);
     rightMotor.setSmartCurrentLimit(80);
@@ -74,6 +77,10 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
   public void periodic() {
       super.periodic();
       SmartDashboard.putNumber("Arm Angle", getMeasurement());
+
+      SmartDashboard.putNumber("Arm PID Goal", this.getController().getGoal().position);
+      SmartDashboard.putNumber("Arm PID Setpoint", this.getController().getSetpoint().position);
+      SmartDashboard.putNumber("Arm motor voltage", leftMotor.getAppliedOutput());
 
       //SmartDashboard.putBoolean("Arm ready", isReady());
       //SmartDashboard.putBoolean("Is Intaking Pose", isInIntakingPos());
@@ -105,7 +112,6 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
   }
 
   //For use in autonomous methods to shoot after the Arm is in position
-
   public boolean isWithinThreshold(double value, double target, double threshold){
     return Math.abs(value - target) < threshold;
   }

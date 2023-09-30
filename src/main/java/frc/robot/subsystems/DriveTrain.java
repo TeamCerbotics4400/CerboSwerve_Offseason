@@ -33,7 +33,7 @@ public class DriveTrain extends SubsystemBase {
 
   private final Pigeon2 imu = new Pigeon2(DriveConstants.IMU_ID);
 
-  //private VisionSystem m_vision = new VisionSystem(this);
+  private VisionSubsystem m_vision = new VisionSubsystem(this);
 
   private final PIDController xPID = new PIDController(0, 0, 0);
   private final PIDController yPID = new PIDController(0, 0, 0);
@@ -113,17 +113,16 @@ public class DriveTrain extends SubsystemBase {
 
   //AUTO RAMSETE
   /*public Command followTrajectoryCommand(PathPlannerTrajectory trajectory){
-    PPSwerveControllerCommand ramseteCommand = new PPSwerveControllerCommand(
-     trajectory, 
-     () -> m_vision.estimatedPose2d(),
-     DriveConstants.kSwerveKinematics,
-     xPID,
-     yPID, 
-     rotationPID, 
-     this::setModuleStates, 
-     this);
-
-    //Estoy cansado jefe
+    PPSwerveControllerCommand purePursuitCommand = new PPSwerveControllerCommand(
+      trajectory, 
+      () -> m_vision.estimatedPose2d(), 
+       DriveConstants.kSwerveKinematics,
+       xPID, 
+       yPID, 
+       rotationPID, 
+       this::setModuleStates, 
+       true, 
+       this);
 
       return ramseteCommand;
   }*/

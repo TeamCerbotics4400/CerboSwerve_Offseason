@@ -171,73 +171,7 @@ public final class Constants {
     public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3;
     public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
   }
-
-  /*************** SUPERSTRUCTURE ****************/
-
-  public static final class ShooterConstants {
-    public static final byte LEFT_FLYWHEEL_ID = 6; 
-    public static final byte RIGHT_FLYWHEEL_ID = 5; //Pending
-
-    public static double kP= 0.078061,//0.087,
-                        kI = 0.0,
-                        kD = 0.0,//0.95,
-                        kIz = 0,
-                        kFF = 0.0495;
-
-    public static final double shooterTreshold = 300;
-  }
-
-  public static final class ArmConstants {
-    public static byte LEFT_ARM_ID = 8; 
-    public static byte RIGHT_ARM_ID = 7;
-
-    //public static double ARM_DEGREES_PER_MOTOR_ROTATION = 32.89;
-
-    //TODO: RETUNE ARM FF AND PID VALUES
-
-    public static double kP = 0.0,//0.011991,//0.11991,//0.013821,//0.0011773,//0.012904,//4.3755E-09,
-                         kI = 0.0,
-                         kD = 0.0,//0.017234,//0.021835,//0.00017643,//0.0024401,//8.274E-10,
-                         kMaxVelocityRadPerSecond = 0.0,//100,//320,
-                         kMaxAccelerationMetersPerSecondSquared = 0.0,//55,//250,//320,
-                         kS = 0.26458,//0.94615,//0.82172,
-                         kV = 0.01285,//0.0021715,//0.0047927,
-                         kA = 0.00091547,//0.0019641,//0.003212,
-                         kG = 1.213;//0.12588;//0.44033;
-
-    public static double IDLE_POSITION = 90.0,
-                         SUBSTATION_POSITION = 130.5,
-                         SCORING_POSITION = 100,//115;
-                         BACK_FLOOR_POSITION = 75,
-                         FRONT_FLOOR_POSITION = 115,
-                         AVE_MARIA_SHOOT_POSITION = 120.0,
-                         COUNTER_BALANCE_POSITION = 60.0,
-                         TESTING_ANGLE = 90.0;
-
-    public static double ARM_THRESHOLD = 9.5;
-  }
-
-  public static final class WristConstants {
-    public static byte WRIST_ID = 9; 
-
-    public static double kP = 0.18221,
-                         kI = 0.0,
-                         kD = 0.0151835,
-                         kFF = 0.0,
-                         kMaxVelocityRadPerSecond = 130,//440,
-                         kMaxAccelerationMetersPerSecondSquared = 130,//440,
-                         kS = 0.46147,
-                         kV = 0.020646,
-                         kA = 0.008245,
-                         kG = 0.45406;
-
-    public static double LEFT_POSITION = 90.0,
-                         IDLE_POSITION = 0.0,
-                         RIGHT_POSITION = -95.0;
-
-    public static double WRIST_THRESHOLD = 4;
-  }
-
+  
   /*************** MISC ****************/
 
   public static final class VisionConstants {

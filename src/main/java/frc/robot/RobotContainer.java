@@ -9,20 +9,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants.ArmConstants;
-import frc.robot.Constants.WristConstants;
-import frc.robot.commands.StateIntake;
-import frc.robot.commands.StateShooterCommand;
 import frc.robot.commands.TeleopCommands.TeleopControl;
-import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.FalconShooter;
-import frc.robot.subsystems.NodeSelector;
-import frc.robot.subsystems.WristSubsystem;
-import team4400.StateMachines;
-import team4400.StateMachines.IntakeState;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -33,14 +22,9 @@ import team4400.StateMachines.IntakeState;
 public class RobotContainer {
 
   private final DriveTrain m_drive = new DriveTrain();
-  private final ArmSubsystem m_arm = new ArmSubsystem();
-  private final WristSubsystem m_wrist = new WristSubsystem();
-  private final FalconShooter m_shooter = new FalconShooter();
   
   private final Joystick chassisDriver = new Joystick(0);
   private final Joystick subsystemsDriver = new Joystick(1);
-
-  private final NodeSelector m_selector = new NodeSelector(subsystemsDriver);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -68,51 +52,6 @@ public class RobotContainer {
   private void configureBindings() {
     new JoystickButton(chassisDriver, 1).onTrue(
       new InstantCommand(() -> m_drive.zeroHeading()));
-
-    //Left bumper
-   new JoystickButton(chassisDriver, 5)
-   .onTrue(m_arm.goToPosition(ArmConstants.BACK_FLOOR_POSITION))
-  .whileTrue(m_wrist.goToPosition(WristConstants.RIGHT_POSITION))
-  //.whileTrue(new StateIntake(m_shooter, m_arm, IntakeState.INTAKING))
-  .whileFalse(m_arm.goToPosition(ArmConstants.IDLE_POSITION))
-  .whileFalse(m_wrist.goToPosition(WristConstants.IDLE_POSITION));
-
-  //Right bumper
-  new JoystickButton(chassisDriver, 6)
-  .onTrue(m_arm.goToPosition(ArmConstants.FRONT_FLOOR_POSITION))
-  .whileTrue(m_wrist.goToPosition(WristConstants.LEFT_POSITION))
-  //.whileTrue(new StateIntake(m_shooter, m_arm, IntakeState.INTAKING))
-  .whileFalse(m_arm.goToPosition(ArmConstants.IDLE_POSITION))
-  .whileFalse(m_wrist.goToPosition(WristConstants.IDLE_POSITION));
-
-  //Controller 2
-   //Pov up
-   new POVButton(subsystemsDriver, 0).onTrue(new InstantCommand(() -> m_selector.updateSelectionUp()));
-
-   //Pov down
-   new POVButton(subsystemsDriver, 180).onTrue(new InstantCommand(() -> m_selector.updateSelectionDown()));
-
-   //Left bumper
-   /* 
-    new JoystickButton(subsystemsDriver, 5)
-   .onTrue(m_arm.goToPosition(ArmConstants.FRONT_FLOOR_POSITION))
-   .whileTrue(m_wrist.goToPosition(WristConstants.LEFT_POSITION))
-   .whileFalse(m_arm.goToPosition(ArmConstants.IDLE_POSITION))
-   .whileFalse(m_wrist.goToPosition(WristConstants.IDLE_POSITION));
-
-   //Right bumper
-   new JoystickButton(subsystemsDriver, 6)
-   .onTrue(m_arm.goToPosition(ArmConstants.SCORING_POSITION))
-   .whileTrue(m_wrist.goToPosition(WristConstants.LEFT_POSITION))
-   .whileFalse(m_arm.goToPosition(ArmConstants.IDLE_POSITION))
-   .whileFalse(m_wrist.goToPosition(WristConstants.IDLE_POSITION));
-
-   new JoystickButton(subsystemsDriver, 4)
-   .whileTrue(new StateShooterCommand(m_shooter, m_arm, m_wrist, IntakeState.SHOOTING, 
-                                                                            m_selector));
-
-   new JoystickButton(subsystemsDriver, 2).toggleOnTrue(
-    new InstantCommand(() -> StateMachines.setIntakeIdle()));*/
   }
 
   /**

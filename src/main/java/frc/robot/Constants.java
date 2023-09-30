@@ -165,9 +165,9 @@ public final class Constants {
     public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
 
     public static final double kTeleDriveMaxSpeedMetersPerSecond = 
-                kPhysicalMaxSpeedMetersPerSecond / 4; //TODO: TeleOp drive speed
+                kPhysicalMaxSpeedMetersPerSecond / 2; //TODO: TeleOp drive speed
     public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = 
-                kPhysicalMaxAngularSpeedRadiansPerSecond / 4; //TODO: TeleOp angle speed
+                kPhysicalMaxAngularSpeedRadiansPerSecond / 2; //TODO: TeleOp angle speed
     public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3;
     public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
   }
@@ -195,15 +195,15 @@ public final class Constants {
 
     //TODO: RETUNE ARM FF AND PID VALUES
 
-    public static double kP = 0.13821,//0.11991,//0.013821,//0.0011773,//0.012904,//4.3755E-09,
+    public static double kP = 0.14521,//0.13821,//0.11991,//0.013821,//0.0011773,//0.012904,//4.3755E-09,
                          kI = 0.0,
-                         kD = 0.021835,//0.021835,//0.00017643,//0.0024401,//8.274E-10,
+                         kD = 0.046894,//0.021835,//0.021835,//0.00017643,//0.0024401,//8.274E-10,
                          kMaxVelocityRadPerSecond = 320,
                          kMaxAccelerationMetersPerSecondSquared = 250,//320,
-                         kS = 0.94615,//0.94615,//0.82172,
-                         kV = 0.0021715,//0.0021715,//0.0047927,
-                         kA = 0.0019641,//0.0019641,//0.003212,
-                         kG = 0.12588;//0.12588;//0.44033;
+                         kS = 0.94615,//-5.6804,//0.94615,//0.94615,//0.82172,
+                         kV = 0.044409,//0.0021715,//0.0021715,//0.0047927,
+                         kA = 0.0075094,//0.0019641,//0.0019641,//0.003212,
+                         kG = 6.1132;//0.12588;//0.12588;//0.44033;
 
     public static double IDLE_POSITION = 90.0,
                          SUBSTATION_POSITION = 130.5,

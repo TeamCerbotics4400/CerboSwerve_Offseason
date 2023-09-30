@@ -70,7 +70,7 @@ public class RobotContainer {
       new InstantCommand(() -> m_drive.zeroHeading()));
 
     //Left bumper
-    new JoystickButton(chassisDriver, 5)
+    /*new JoystickButton(chassisDriver, 5)
    .onTrue(m_arm.goToPosition(ArmConstants.BACK_FLOOR_POSITION))
    .whileTrue(m_wrist.goToPosition(WristConstants.RIGHT_POSITION))
    //.whileTrue(new StateIntake(m_shooter, m_arm, IntakeState.INTAKING))
@@ -83,7 +83,7 @@ public class RobotContainer {
   .whileTrue(m_wrist.goToPosition(WristConstants.LEFT_POSITION))
   //.whileTrue(new StateIntake(m_shooter, m_arm, IntakeState.INTAKING))
   .whileFalse(m_arm.goToPosition(ArmConstants.IDLE_POSITION))
-  .whileFalse(m_wrist.goToPosition(WristConstants.IDLE_POSITION));
+  .whileFalse(m_wrist.goToPosition(WristConstants.IDLE_POSITION));*/
 
   //Controller 2
    //Pov up

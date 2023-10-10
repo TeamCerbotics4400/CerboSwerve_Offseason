@@ -81,9 +81,9 @@ public final class Constants {
       public static final int TURN_ID = 17;
       public static final boolean driveReversed = false;
       public static final boolean turnReversed = true;
-      public static final int ABSOLUTE_ID = 3; //Check Analog Ports
+      public static final int ABSOLUTE_ID = 3; 
       public static final boolean encoderReversed = false;
-      public static double encoderOffset = -163.20;//201.0; //1970;
+      public static double encoderOffset = -163.20;
 
       public static final SwerveModuleConstants CONSTANTS = 
       new SwerveModuleConstants(DRIVE_ID, TURN_ID, driveReversed, 
@@ -97,7 +97,7 @@ public final class Constants {
       public static final boolean turnReversed = true;
       public static final int ABSOLUTE_ID = 2;
       public static final boolean encoderReversed = false;
-      public static double encoderOffset = 152.60;//156.0;//153.0;
+      public static double encoderOffset = 152.60;
 
       public static final SwerveModuleConstants CONSTANTS = 
       new SwerveModuleConstants(DRIVE_ID, TURN_ID, driveReversed, 
@@ -111,7 +111,7 @@ public final class Constants {
       public static final boolean turnReversed = true;
       public static final int ABSOLUTE_ID = 1;
       public static final boolean encoderReversed = false;
-      public static double encoderOffset = 103.25;//105.0;//284.0;
+      public static double encoderOffset = 103.25;
 
       public static final SwerveModuleConstants CONSTANTS = 
       new SwerveModuleConstants(DRIVE_ID, TURN_ID, driveReversed, 
@@ -125,7 +125,7 @@ public final class Constants {
       public static final boolean turnReversed = true;
       public static final int ABSOLUTE_ID = 0;
       public static final boolean encoderReversed = false;
-      public static double encoderOffset = 91.24;//277.0;//33.0;// Algo raro
+      public static double encoderOffset = 91.24;
 
       public static final SwerveModuleConstants CONSTANTS = 
       new SwerveModuleConstants(DRIVE_ID, TURN_ID, driveReversed, 
@@ -138,11 +138,7 @@ public final class Constants {
     public static final double kTrackWidth = 0.5842;
     //Distance between front and back wheels
     public static final double kWheelBase = 0.6604;
-    //Original
-    //+ / +
-    //- / +
-    //- / -
-    //+ / -
+  
     public static final SwerveDriveKinematics kSwerveKinematics = new SwerveDriveKinematics(
       new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
       new Translation2d(-kWheelBase / 2, -kTrackWidth / 2),
@@ -176,7 +172,7 @@ public final class Constants {
 
   public static final class ShooterConstants {
     public static final byte LEFT_FLYWHEEL_ID = 6; 
-    public static final byte RIGHT_FLYWHEEL_ID = 5; //Pending
+    public static final byte RIGHT_FLYWHEEL_ID = 5; 
 
     public static double kP= 0.078061,//0.087,
                         kI = 0.0,
@@ -195,15 +191,15 @@ public final class Constants {
 
     //TODO: RETUNE ARM FF AND PID VALUES
 
-    public static double kP = 0.13821,//0.11991,//0.013821,//0.0011773,//0.012904,//4.3755E-09,
+    public static double kP = 0.0,//0.13384,//0.012174,//0.13821,//0.11991,//0.013821,//0.0011773,//0.012904,//4.3755E-09,
                          kI = 0.0,
-                         kD = 0.021835,//0.021835,//0.00017643,//0.0024401,//8.274E-10,
+                         kD = 0.0,//0.019022,//0.0088079,//0.021835,//0.021835,//0.00017643,//0.0024401,//8.274E-10,
                          kMaxVelocityRadPerSecond = 320,
                          kMaxAccelerationMetersPerSecondSquared = 250,//320,
-                         kS = 0.94615,//0.94615,//0.82172,
-                         kV = 0.0021715,//0.0021715,//0.0047927,
-                         kA = 0.0019641,//0.0019641,//0.003212,
-                         kG = 0.12588;//0.12588;//0.44033;
+                         kS = 0.17537,//0.94615,//0.94615,//0.82172,
+                         kV = 0.0083418,//0.0021715,//0.0021715,//0.0047927,
+                         kA = 0.0014458,//0.0019641,//0.0019641,//0.003212,
+                         kG = 0.43126;//0.12588;//0.12588;//0.44033;
 
     public static double IDLE_POSITION = 90.0,
                          SUBSTATION_POSITION = 130.5,

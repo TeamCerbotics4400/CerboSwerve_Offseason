@@ -5,109 +5,99 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import frc.robot.Constants.ArmConstants;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
+import frc.robot.Constants.ArmConstants;
 
-/** A robot arm subsystem that moves with a motion profile. **/
-
-/*
- * Why not use Rev's motion profiling if we have Neo 500 motors?
- * Well we have an Absolute Encoder that returns the current Arm angle but is not connected to the
- * Spark Max data port but to the RoboRIO DIO port 2, so we decided that it was better to use the
- * ProfiedPIDSubsystem class for our Arm so we can have a Motion Profiling PID with the absolute
- * Encoder as a feedback Device.
- */
 public class ArmSubsystem extends ProfiledPIDSubsystem {
-  private final CANSparkMax leftMotor = new CANSparkMax(ArmConstants.LEFT_ARM_ID, MotorType.kBrushless);
-  private final CANSparkMax rightMotor = new CANSparkMax(ArmConstants.RIGHT_ARM_ID, MotorType.kBrushless);
-  private final DutyCycleEncoder m_encoder =
-      new DutyCycleEncoder(2);
-  private final ArmFeedforward m_feedforward =
-      new ArmFeedforward(
-          ArmConstants.kS, ArmConstants.kG,
-          ArmConstants.kV, ArmConstants.kA);
+  /** Creates a new ArmSubsystem. */
+  private final CANSparkMax leftMotor = 
+              new CANSparkMax(ArmConstants.LEFT_ARM_ID, MotorType.kBrushless);
+  private final CANSparkMax rightMotor = 
+              new CANSparkMax(ArmConstants.RIGHT_ARM_ID, MotorType.kBrushless);
+  
+  private final DutyCycleEncoder m_encoder = new DutyCycleEncoder(2);
 
-  boolean onTarget;
+  private final ArmFeedforward m_feedForward = 
+  new ArmFeedforward(
+    ArmConstants.kS, 
+    ArmConstants.kG, 
+    ArmConstants.kV,
+    ArmConstants.kA);
 
-  //Arm Gearbox 32:1 (The big sprockets)
-  /** Create a new ArmSubsystem. */
   public ArmSubsystem() {
     super(
+        // The ProfiledPIDController used by the subsystem
         new ProfiledPIDController(
             ArmConstants.kP,
             0,
             ArmConstants.kD,
+            // The motion profile constraints
             new TrapezoidProfile.Constraints(
-                ArmConstants.kMaxVelocityRadPerSecond,
-                ArmConstants.kMaxAccelerationMetersPerSecondSquared)),
-        90.3);
-    
-    //Makes the Arm absolute Encoder return every rotation as angles
-    m_encoder.setDistancePerRotation(360.0);
-    // Start arm at rest in neutral position
-    setGoal(90.3);
+              ArmConstants.kMaxVelocityRadPerSecond,
+              ArmConstants.kMaxAccelerationMetersPerSecondSquared)));
 
     leftMotor.restoreFactoryDefaults();
     rightMotor.restoreFactoryDefaults();
 
-    leftMotor.setInverted(true);
-    rightMotor.setInverted(false);
+    leftMotor.setInverted(false);
 
-    rightMotor.follow(leftMotor);
+    rightMotor.follow(leftMotor, true);
 
     leftMotor.setSmartCurrentLimit(80);
     rightMotor.setSmartCurrentLimit(80);
 
     leftMotor.setCANTimeout(0);
     rightMotor.setCANTimeout(0);
-  }
+    
 
+    m_encoder.setDistancePerRotation(360);
+
+    setGoal(90.3);
+  }
 
   @Override
   public void periodic() {
       super.periodic();
+
       SmartDashboard.putNumber("Arm Angle", getMeasurement());
 
-      SmartDashboard.putNumber("Arm PID Goal", this.getController().getGoal().position);
-      SmartDashboard.putNumber("Arm PID Setpoint", this.getController().getSetpoint().position);
-      SmartDashboard.putNumber("Arm motor voltage", leftMotor.getAppliedOutput());
-
-      //SmartDashboard.putBoolean("Arm ready", isReady());
-      //SmartDashboard.putBoolean("Is Intaking Pose", isInIntakingPos());
+      SmartDashboard.putNumber("Left Arm Current", leftMotor.getOutputCurrent());
+      SmartDashboard.putNumber("Right Arm Current", rightMotor.getOutputCurrent());
   }
 
   @Override
   public void useOutput(double output, TrapezoidProfile.State setpoint) {
-    // Calculate the feedforward from the sepoint
-    double feedforward = m_feedforward.calculate(setpoint.position, setpoint.velocity);
-    // Add the feedforward to the PID output to get the motor output
-    leftMotor.setVoltage(output + feedforward);
+    // Use the output (and optionally the setpoint) here
+    double feedForward =  m_feedForward.calculate(Units.radiansToDegrees(setpoint.position), 
+    setpoint.velocity);
+
+    leftMotor.setVoltage(output + feedForward);
   }
 
   @Override
   public double getMeasurement() {
-    //Minus 70.5 because that gives us a range betwueen 0-180 degrees, 0 being the left position
-    //and 180 the right position while 90 degrees is the idle vertical position
+    // Return the process variable measurement here
     return m_encoder.getDistance() - 100.5;
   }
 
   public Command goToPosition(double position){
     Command ejecutable = Commands.runOnce(
-                () -> {
-                  this.setGoal(position);
-                  this.enable();
-                },
-                this);
+      () -> {
+        this.setGoal(position);
+        this.enable();
+      },
+      this);
+
     return ejecutable;
   }
 
@@ -121,34 +111,4 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
                              getController().getGoal().position, 
                              ArmConstants.ARM_THRESHOLD);
   }
-  
-  //OLD METHODS
-  /*public boolean isReady(){
-    if(getMeasurement() > getController().getGoal().position - ArmConstants.ARM_THRESHOLD 
-    && getMeasurement() < getController().getGoal().position + ArmConstants.ARM_THRESHOLD){
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  public boolean isInIntakingPos(){
-    if(this.getController().getGoal().position == ArmConstants.BACK_FLOOR_POSITION && 
-    isReady() || this.getController().getGoal().position == ArmConstants.FRONT_FLOOR_POSITION && 
-    isReady()){
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  public boolean isInShootingPos(){
-    if(this.getController().getGoal().position == ArmConstants.SCORING_POSITION && 
-    isReady() || this.getController().getGoal().position == ArmConstants.AVE_MARIA_SHOOT_POSITION && 
-    isReady()){
-      return true;
-    } else {
-      return false;
-    }
-  }*/
 }

@@ -81,7 +81,7 @@ public final class Constants {
       public static final int TURN_ID = 17;
       public static final boolean driveReversed = false;
       public static final boolean turnReversed = true;
-      public static final int ABSOLUTE_ID = 3; 
+      public static final int ABSOLUTE_ID = 1; 
       public static final boolean encoderReversed = false;
       public static double encoderOffset = -163.20;
 
@@ -109,7 +109,7 @@ public final class Constants {
       public static final int TURN_ID = 1;
       public static final boolean driveReversed = true;
       public static final boolean turnReversed = true;
-      public static final int ABSOLUTE_ID = 1;
+      public static final int ABSOLUTE_ID = 0;
       public static final boolean encoderReversed = false;
       public static double encoderOffset = 103.25;
 
@@ -123,7 +123,7 @@ public final class Constants {
       public static final int TURN_ID = 19;
       public static final boolean driveReversed = false;
       public static final boolean turnReversed = true;
-      public static final int ABSOLUTE_ID = 0;
+      public static final int ABSOLUTE_ID = 1;
       public static final boolean encoderReversed = false;
       public static double encoderOffset = 91.24;
 
@@ -191,9 +191,9 @@ public final class Constants {
 
     //TODO: RETUNE ARM FF AND PID VALUES
 
-    public static double kP = 0.0,//0.13384,//0.012174,//0.13821,//0.11991,//0.013821,//0.0011773,//0.012904,//4.3755E-09,
+    public static double kP = 0.13384,//0.012174,//0.13821,//0.11991,//0.013821,//0.0011773,//0.012904,//4.3755E-09,
                          kI = 0.0,
-                         kD = 0.0,//0.019022,//0.0088079,//0.021835,//0.021835,//0.00017643,//0.0024401,//8.274E-10,
+                         kD = 0.019022,//0.0088079,//0.021835,//0.021835,//0.00017643,//0.0024401,//8.274E-10,
                          kMaxVelocityRadPerSecond = 320,
                          kMaxAccelerationMetersPerSecondSquared = 250,//320,
                          kS = 0.17537,//0.94615,//0.94615,//0.82172,
@@ -204,8 +204,8 @@ public final class Constants {
     public static double IDLE_POSITION = 90.0,
                          SUBSTATION_POSITION = 130.5,
                          SCORING_POSITION = 100,//115;
-                         BACK_FLOOR_POSITION = 75,
-                         FRONT_FLOOR_POSITION = 115,
+                         BACK_FLOOR_POSITION = 1.15,
+                         FRONT_FLOOR_POSITION = 175.0,
                          AVE_MARIA_SHOOT_POSITION = 120.0,
                          COUNTER_BALANCE_POSITION = 60.0,
                          TESTING_ANGLE = 90.0;

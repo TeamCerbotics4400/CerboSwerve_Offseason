@@ -60,7 +60,9 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
     rightMotor.setCANTimeout(0);
     
 
-    m_encoder.setDistancePerRotation(360);
+    m_encoder.setDistancePerRotation(-360.0);
+
+    m_encoder.reset();
 
     setGoal(90.3);
   }
@@ -87,7 +89,7 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
   @Override
   public double getMeasurement() {
     // Return the process variable measurement here
-    return m_encoder.getDistance() - 100.5;
+    return m_encoder.getDistance() + 406; //- 226.5;
   }
 
   public Command goToPosition(double position){

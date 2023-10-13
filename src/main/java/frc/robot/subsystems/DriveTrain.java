@@ -59,6 +59,11 @@ public class DriveTrain extends SubsystemBase {
       swerveModules[mod.moduleNumber].getAngleDeegrees());
     }
 
+    /*for(SwerveModule mod : swerveModules){
+      SmartDashboard.putNumber("Module [" + mod.moduleNumber + "] Absolute Volts", 
+      swerveModules[mod.moduleNumber].getRawAbsoluteVolts());
+    }*/
+
     SmartDashboard.putNumber("IMU Angle", getHeading());  
   
   }

@@ -30,7 +30,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
-    m_robotContainer.getDrive().setAllianceForVision(DriverStation.getAlliance());
+   m_robotContainer.getDrive().setAllianceForVision(DriverStation.getAlliance());
 
   }
 

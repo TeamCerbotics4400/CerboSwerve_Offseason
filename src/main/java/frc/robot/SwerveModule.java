@@ -100,6 +100,10 @@ public class SwerveModule {
         return driveEncoder.getVelocity();
     }
 
+    public double getRawAbsoluteVolts(){
+        return absoluteEncoder.getAbsolutePosition();
+    }
+
     public double getAngleDeegrees(){
         double rawAngle = 
                 (absoluteEncoder.getAbsolutePosition() * 360 - absoluteEncoderOffset) % 360;

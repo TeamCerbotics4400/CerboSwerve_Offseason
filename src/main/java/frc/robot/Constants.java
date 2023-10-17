@@ -51,8 +51,6 @@ public final class Constants {
      * Gives us a tool for a cleaner and readable swerve code
     */
 
-    //TODO: PLACEHOLDER VALUES
-
     /*    
      *                   F             
      *   ┌───────┬─────────────────┬───────┐
@@ -74,14 +72,14 @@ public final class Constants {
      *                   B
      */
 
-     //TODO: If Encoders connected to RIO, check new ports and check for new Offsets;
+     //Offsets are different in each robot and encoder;
 
     public static final class Module0{
       public static final int DRIVE_ID = 16;
       public static final int TURN_ID = 17;
       public static final boolean driveReversed = false;
       public static final boolean turnReversed = true;
-      public static final int ABSOLUTE_ID = 1; 
+      public static final int ABSOLUTE_ID = 3; 
       public static final boolean encoderReversed = false;
       public static double encoderOffset = -163.20;
 
@@ -121,11 +119,11 @@ public final class Constants {
     public static final class Module3{
       public static final int DRIVE_ID = 18;
       public static final int TURN_ID = 19;
-      public static final boolean driveReversed = false;
+      public static final boolean driveReversed = true;
       public static final boolean turnReversed = true;
       public static final int ABSOLUTE_ID = 1;
       public static final boolean encoderReversed = false;
-      public static double encoderOffset = 91.24;
+      public static double encoderOffset = -90.5;
 
       public static final SwerveModuleConstants CONSTANTS = 
       new SwerveModuleConstants(DRIVE_ID, TURN_ID, driveReversed, 
@@ -166,6 +164,12 @@ public final class Constants {
                 kPhysicalMaxAngularSpeedRadiansPerSecond / 4; //TODO: TeleOp angle speed
     public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3;
     public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
+    public static final double kDriveBaseRadius = 0.0;
+
+    public static final double traslationP = 0.0,
+                               traslationD = 0.0,
+                               rotationP = 0.0,
+                               rotationD = 0.0;
   }
 
   /*************** SUPERSTRUCTURE ****************/
@@ -188,8 +192,6 @@ public final class Constants {
     public static byte RIGHT_ARM_ID = 7;
 
     //public static double ARM_DEGREES_PER_MOTOR_ROTATION = 32.89;
-
-    //TODO: RETUNE ARM FF AND PID VALUES
 
     public static double kP = 0.13384,//0.012174,//0.13821,//0.11991,//0.013821,//0.0011773,//0.012904,//4.3755E-09,
                          kI = 0.0,

@@ -1,0 +1,12 @@
+{
+  "robotWidth": 0.9,
+  "robotLength": 0.9,
+  "holonomicMode": true,
+  "pathFolders": [
+    "Full circuit paths",
+    "Swerve auto testing"
+  ],
+  "autoFolders": [
+    "Swerve Testing"
+  ]
+}

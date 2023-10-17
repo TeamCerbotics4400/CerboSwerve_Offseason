@@ -127,7 +127,8 @@ public class SwerveModule {
     }
 
     public SwerveModuleState getState(){
-        return new SwerveModuleState(getDriveVelocity(), new Rotation2d(turningDeegreesToRadians()));
+        return new SwerveModuleState(getDriveVelocity(), 
+        Rotation2d.fromDegrees(getAngleDeegrees()));
     }
 
     public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop){
@@ -181,7 +182,7 @@ public class SwerveModule {
     public SwerveModulePosition getPosition(){
         return new SwerveModulePosition(
             getDrivePosition(), 
-            new Rotation2d(getAngleDeegrees()));
+            Rotation2d.fromDegrees(getAngleDeegrees()));
     }
 
     public void stop(){

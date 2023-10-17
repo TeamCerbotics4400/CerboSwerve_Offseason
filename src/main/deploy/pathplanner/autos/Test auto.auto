@@ -1,0 +1,36 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 2.059187935169764,
+      "y": 4.579260761574959
+    },
+    "rotation": -97.22431569404533
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Path test1"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.5
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Path test2"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null
+}

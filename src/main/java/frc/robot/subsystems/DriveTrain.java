@@ -5,15 +5,19 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.sensors.Pigeon2;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
 
-import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.SwerveModule;
 import frc.robot.Constants.DriveConstants;
@@ -34,10 +38,6 @@ public class DriveTrain extends SubsystemBase {
 
   private VisionSubsystem m_vision = new VisionSubsystem(this);
 
-  private final PIDController xPID = new PIDController(0, 0, 0);
-  private final PIDController yPID = new PIDController(0, 0, 0);
-  private final PIDController rotationPID = new PIDController(0, 0, 0);
-
   /** Creates a new DriveTrain. */
   public DriveTrain() {
     new Thread(() -> {
@@ -46,6 +46,23 @@ public class DriveTrain extends SubsystemBase {
         zeroHeading();
       } catch (Exception e){}
     }).start();
+
+    AutoBuilder.configureHolonomic(
+      () -> m_vision.estimatedPose2d(),
+      this::resetOdometryPose, 
+      null, 
+      null, 
+      new HolonomicPathFollowerConfig(
+        new PIDConstants(
+          DriveConstants.traslationP, 
+          DriveConstants.traslationD), 
+        new PIDConstants(
+          DriveConstants.rotationP, 
+          DriveConstants.rotationD), 
+        DriveConstants.kPhysicalMaxSpeedMetersPerSecond, 
+        DriveConstants.kDriveBaseRadius, 
+        new ReplanningConfig()), 
+      this);
   }
 
   @Override
@@ -115,23 +132,19 @@ public class DriveTrain extends SubsystemBase {
     return positions;
   }
 
+  public ChassisSpeeds getRobotRelativeSpeeds(){
+    return DriveConstants.kSwerveKinematics.toChassisSpeeds(getModuleStates());
+  }
+
+  public void setRobotRelativeSpeeds(){
+    
+  }
+
   public void setAllianceForVision(Alliance alliance){
     m_vision.setAlliance(alliance);
   }
-
-  //AUTO RAMSETE
-  /*public Command followTrajectoryCommand(PathPlannerTrajectory trajectory){
-    PPSwerveControllerCommand purePursuitCommand = new PPSwerveControllerCommand(
-      trajectory, 
-      () -> m_vision.estimatedPose2d(), 
-       DriveConstants.kSwerveKinematics,
-       xPID, 
-       yPID, 
-       rotationPID, 
-       this::setModuleStates, 
-       true, 
-       this);
-
-      return ramseteCommand;
-  }*/
+  
+  public void resetOdometryPose(Pose2d pose){
+    m_vision.resetPoseEstimator(pose);
+  }
 }

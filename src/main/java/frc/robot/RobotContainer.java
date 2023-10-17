@@ -73,7 +73,7 @@ public class RobotContainer {
     new JoystickButton(chassisDriver, 5)
    .onTrue(m_arm.goToPosition(ArmConstants.BACK_FLOOR_POSITION))
    .whileTrue(m_wrist.goToPosition(WristConstants.RIGHT_POSITION))
-   //.whileTrue(new StateIntake(m_shooter, m_arm, IntakeState.INTAKING))
+   .whileTrue(new StateIntake(m_shooter, m_arm, IntakeState.INTAKING))
    .whileFalse(m_arm.goToPosition(ArmConstants.IDLE_POSITION))
    .whileFalse(m_wrist.goToPosition(WristConstants.IDLE_POSITION));
 
@@ -81,7 +81,7 @@ public class RobotContainer {
   new JoystickButton(chassisDriver, 6)
   .onTrue(m_arm.goToPosition(ArmConstants.FRONT_FLOOR_POSITION))
   .whileTrue(m_wrist.goToPosition(WristConstants.LEFT_POSITION))
-  //.whileTrue(new StateIntake(m_shooter, m_arm, IntakeState.INTAKING))
+  .whileTrue(new StateIntake(m_shooter, m_arm, IntakeState.INTAKING))
   .whileFalse(m_arm.goToPosition(ArmConstants.IDLE_POSITION))
   .whileFalse(m_wrist.goToPosition(WristConstants.IDLE_POSITION));
 
@@ -93,7 +93,7 @@ public class RobotContainer {
    new POVButton(subsystemsDriver, 180).onTrue(new InstantCommand(() -> m_selector.updateSelectionDown()));
 
    //Left bumper
-   /* 
+   
     new JoystickButton(subsystemsDriver, 5)
    .onTrue(m_arm.goToPosition(ArmConstants.FRONT_FLOOR_POSITION))
    .whileTrue(m_wrist.goToPosition(WristConstants.LEFT_POSITION))
@@ -112,7 +112,7 @@ public class RobotContainer {
                                                                             m_selector));
 
    new JoystickButton(subsystemsDriver, 2).toggleOnTrue(
-    new InstantCommand(() -> StateMachines.setIntakeIdle()));*/
+    new InstantCommand(() -> StateMachines.setIntakeIdle()));
   }
 
   /**

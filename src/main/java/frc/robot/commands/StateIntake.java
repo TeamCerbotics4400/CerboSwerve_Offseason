@@ -36,7 +36,8 @@ public class StateIntake extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_shooter.setCurrentLimit(18, 0.1);
+    //TODO: Current limiter affecting flywheel acceleration
+    m_shooter.setCurrentLimit(18, 0.1); 
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -53,7 +54,7 @@ public class StateIntake extends CommandBase {
 
     switch(StateMachines.getIntakeState().toString()){
       case "IDLE":
-        m_shooter.setMotorsPower(0, 0, 0);
+        m_shooter.setMotorsPower(0, 0);
         rumbleTimer.stop();
         rumbleTimer.reset();
       break;
@@ -65,7 +66,7 @@ public class StateIntake extends CommandBase {
       break;
 
       case "FULL":
-       m_shooter.setMotorsPower(0, 0, 0);
+       m_shooter.setMotorsPower(0, 0);
        rumbleTimer.start();
 
        /*if(rumbleTimer.get() < 1){
@@ -83,7 +84,7 @@ public class StateIntake extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_shooter.setMotorsPower(0, 0, 0);
+    m_shooter.setMotorsPower(0, 0);
   }
 
   // Returns true when the command should end.

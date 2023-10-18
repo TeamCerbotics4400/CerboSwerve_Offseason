@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.math.filter.LinearFilter;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.LimelightHelpers;
 import frc.robot.Constants.ShooterConstants;
@@ -67,7 +68,6 @@ public class FalconShooter extends SubsystemBase {
   boolean onTarget = false;
 
   double falconDesiredVelo = 0;
-  double neoDesiredVelo = 0;
 
   int pidSlot = 0;
 
@@ -76,7 +76,6 @@ public class FalconShooter extends SubsystemBase {
   double shootCurrent = 7.0;
 
   //Reduccion Falcon = 3/1
-  //Reduccion Neo = 2/1
   public FalconShooter() {
 
     leftFlyWheel.configFactoryDefault();
@@ -106,7 +105,7 @@ public class FalconShooter extends SubsystemBase {
     rightFlyWheel.config_IntegralZone(pidSlot, ShooterConstants.kIz);
     rightFlyWheel.config_kF(pidSlot, ShooterConstants.kFF);
 
-    //SmartDashboard.putNumber("Falcon velo", falconDesiredVelo);
+    SmartDashboard.putNumber("Falcon velo", falconDesiredVelo);
     //SmartDashboard.putNumber("Neo velo", neoDesiredVelo);
   }
 
@@ -114,24 +113,21 @@ public class FalconShooter extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
 
-    //SmartDashboard.putNumber("Left Current Filtered", filter.calculate(leftFlyWheel.getStatorCurrent()));
-    //SmartDashboard.putNumber("Right Current Filtered", filter.calculate(rightFlyWheel.getStatorCurrent()));
+    SmartDashboard.putNumber("Left Current Filtered", filter.calculate(leftFlyWheel.getStatorCurrent()));
+    SmartDashboard.putNumber("Right Current Filtered", filter.calculate(rightFlyWheel.getStatorCurrent()));
 
     //SmartDashboard.putNumber("Distance To Target Z", LimelightHelpers.getTargetPose3d_CameraSpace(VisionConstants.tagLimelightName).getZ());
 
     //Tunable Number Shooter
-    /* 
-    SmartDashboard.putNumber("Horizontal velo", neoEncoder.getVelocity());
-    SmartDashboard.putNumber("Left Velo", getLeftRPM());
-    SmartDashboard.putNumber("Right Velo", getRightRPM());
+    
+    SmartDashboard.putNumber("Left Flywheel Velo", getLeftRPM());
+    SmartDashboard.putNumber("Right Flywheel Velo", getRightRPM());
 
     double falconVelo = SmartDashboard.getNumber("Falcon velo", 0);
-    double neoVelo = SmartDashboard.getNumber("Neo velo", 0);
 
     if(falconDesiredVelo != falconVelo){falconDesiredVelo = falconVelo;}
-    if(neoDesiredVelo != neoVelo){neoDesiredVelo = neoVelo;}*/
 
-    //SmartDashboard.putBoolean("NeedToStop", needToStop());
+    SmartDashboard.putBoolean("NeedToStop", needToStop());
   }
 
   public void setCurrentLimit(double current, double seconds){
@@ -193,7 +189,7 @@ public class FalconShooter extends SubsystemBase {
     rightSetpoint(falconDesiredVelo);
   }
 
-  public void setMotorsPower(double leftPower, double rightPower, double horizontalPower){
+  public void setMotorsPower(double leftPower, double rightPower){
     leftFlyWheel.set(TalonFXControlMode.PercentOutput, leftPower);
     rightFlyWheel.set(TalonFXControlMode.PercentOutput, rightPower);
   }
@@ -216,7 +212,7 @@ public class FalconShooter extends SubsystemBase {
 
   public void stopShooterCurrent(){
     if(needToStop()){
-      setMotorsPower(0, 0, 0);
+      setMotorsPower(0, 0);
     }
   }
 

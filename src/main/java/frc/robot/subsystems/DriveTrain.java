@@ -14,6 +14,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -38,6 +39,12 @@ public class DriveTrain extends SubsystemBase {
 
   private VisionSubsystem m_vision = new VisionSubsystem(this);
 
+  private SwerveDriveOdometry encoderOdo = 
+  new SwerveDriveOdometry(
+    DriveConstants.kSwerveKinematics, 
+    getRotation2d(), 
+    getModulePositions());
+
   /** Creates a new DriveTrain. */
   public DriveTrain() {
     new Thread(() -> {
@@ -50,7 +57,7 @@ public class DriveTrain extends SubsystemBase {
     AutoBuilder.configureHolonomic(
       () -> m_vision.estimatedPose2d(),
       this::resetOdometryPose, 
-      null, 
+      () -> getRobotRelativeSpeeds(), 
       null, 
       new HolonomicPathFollowerConfig(
         new PIDConstants(
@@ -136,8 +143,13 @@ public class DriveTrain extends SubsystemBase {
     return DriveConstants.kSwerveKinematics.toChassisSpeeds(getModuleStates());
   }
 
-  public void setRobotRelativeSpeeds(){
-    
+  public void setRobotRelativeSpeeds(double x, double y, double theta){
+    ChassisSpeeds chassisSpeeds = new ChassisSpeeds(x, y, theta);
+
+    SwerveModuleState[] moduleStates = 
+    DriveConstants.kSwerveKinematics.toSwerveModuleStates(chassisSpeeds);
+
+    setModuleStates(moduleStates, false);
   }
 
   public void setAllianceForVision(Alliance alliance){

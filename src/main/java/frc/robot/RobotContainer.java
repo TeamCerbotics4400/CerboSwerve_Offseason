@@ -4,7 +4,10 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -15,6 +18,7 @@ import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.WristConstants;
 import frc.robot.commands.StateIntake;
 import frc.robot.commands.StateShooterCommand;
+import frc.robot.commands.DebugCommands.DebugShooterCommand;
 import frc.robot.commands.TeleopCommands.TeleopControl;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrain;
@@ -42,14 +46,20 @@ public class RobotContainer {
 
   private final NodeSelector m_selector = new NodeSelector(subsystemsDriver);
 
+  private final SendableChooser<String> m_autoChooser = new SendableChooser<>();
+  private final String m_DefaultAuto = "NO AUTO";
+  private String m_selectedAuto;
+  private final String[] m_autoNames = {"NO AUTO", "DRIVE TUNER", "ROTATION TUNER", 
+  "DRIVE AND ROTATION TEST"};
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
 
     m_drive.setDefaultCommand(new TeleopControl
     (m_drive, 
+    () -> -chassisDriver.getRawAxis(0), 
     () -> chassisDriver.getRawAxis(1), 
-    () -> chassisDriver.getRawAxis(0), 
     () -> chassisDriver.getRawAxis(4), 
     () -> !chassisDriver.getRawButton(4)));
 
@@ -113,6 +123,9 @@ public class RobotContainer {
 
    new JoystickButton(subsystemsDriver, 2).toggleOnTrue(
     new InstantCommand(() -> StateMachines.setIntakeIdle()));
+
+   //DEBUG
+   //new JoystickButton(chassisDriver, 1).whileTrue(new DebugShooterCommand(m_shooter));
   }
 
   /**
@@ -122,7 +135,30 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return null;
+    String autoSelected = null;
+    m_selectedAuto = m_autoChooser.getSelected();
+    
+    System.out.println("Auto seleted:" + m_selectedAuto);
+
+    switch(m_selectedAuto){
+      case "NO AUTO":
+        autoSelected = null;
+      break;
+      
+      case "DRIVE TUNER":
+        autoSelected = "DriveTuning";
+      break;
+      
+      case "ROTATION TUNER":
+        autoSelected = "RotationTuning";
+      break;
+      
+      case "DRIVE AND ROTATION TEST":
+        autoSelected = "DriveAndRotate";
+      break;  
+    }
+
+    return new PathPlannerAuto(autoSelected);
   }
 
   public DriveTrain getDrive(){

@@ -164,7 +164,7 @@ public final class Constants {
                 kPhysicalMaxAngularSpeedRadiansPerSecond / 4; //TODO: TeleOp angle speed
     public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3;
     public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
-    public static final double kDriveBaseRadius = 0.0;
+    public static final double kDriveBaseRadius = 0.44085649593;
 
     public static final double traslationP = 0.0,
                                traslationD = 0.0,

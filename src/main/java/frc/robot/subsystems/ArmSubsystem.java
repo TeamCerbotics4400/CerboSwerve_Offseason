@@ -89,7 +89,7 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
   @Override
   public double getMeasurement() {
     // Return the process variable measurement here
-    return m_encoder.getDistance() + 406; //- 226.5;
+    return m_encoder.getDistance() + 47;// + 406; //- 226.5;
   }
 
   public Command goToPosition(double position){

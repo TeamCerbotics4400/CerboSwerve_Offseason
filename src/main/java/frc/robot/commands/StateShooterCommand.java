@@ -60,7 +60,7 @@ public class StateShooterCommand extends CommandBase {
           break;  
         }
       } else {
-        m_shooter.setMotorsPower(0, 0, 0);
+        m_shooter.setMotorsPower(0, 0);
       }
     } else {
       StateMachines.setIntakeState(state);
@@ -76,7 +76,7 @@ public class StateShooterCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_shooter.setMotorsPower(0, 0, 0);
+    m_shooter.setMotorsPower(0, 0);
     StateMachines.setIntakeIdle();
   }
 

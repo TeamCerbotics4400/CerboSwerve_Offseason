@@ -48,7 +48,8 @@ public class WristSubsystem extends ProfiledPIDSubsystem {
 
     wristMotor.restoreFactoryDefaults();
 
-    wristMotor.setInverted(false); //Mirandolo desde un lado gira a la derecha
+    //Check motor direction before testing
+    wristMotor.setInverted(false);
 
     wristMotor.setSmartCurrentLimit(5);
 

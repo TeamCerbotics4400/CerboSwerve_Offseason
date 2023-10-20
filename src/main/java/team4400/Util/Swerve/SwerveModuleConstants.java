@@ -12,19 +12,16 @@ public class SwerveModuleConstants {
     public final boolean driveReversed;
     public final boolean turnReversed;
     public final int absoluteEncoderID;
-    public final boolean absoluteEncoderReversed;
     public final double angleOffset;
 
     public SwerveModuleConstants(int driveMotorID, int turnMotorID,
     boolean driveReversed, boolean turnReversed, int absoluteEncoderID,
-    boolean absoluteEncoderReversed, 
     double angleOffset) {
         this.driveMotorID = driveMotorID;
         this.turnMotorID = turnMotorID;
         this.driveReversed = driveReversed;
         this.turnReversed = turnReversed;
         this.absoluteEncoderID = absoluteEncoderID;
-        this.absoluteEncoderReversed = absoluteEncoderReversed;
         this.angleOffset = angleOffset;
     }
 }

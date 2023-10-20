@@ -41,9 +41,7 @@ public class SwerveModule {
 
     private final SparkMaxPIDController driveController;
     private final PIDController turnController;
-
-    //In case we have an Encoder turning to the opposite direction
-    private final boolean absoluteEncoderReversed; 
+ 
     private final double absoluteEncoderOffset;
 
     private Rotation2d lastAngle;
@@ -56,7 +54,6 @@ public class SwerveModule {
         turnMotor = new CANSparkMax(moduleConstants.turnMotorID, MotorType.kBrushless);
 
         absoluteEncoderOffset = moduleConstants.angleOffset;
-        absoluteEncoderReversed = moduleConstants.absoluteEncoderReversed;
         absoluteEncoder = new AnalogEncoder(moduleConstants.absoluteEncoderID);
 
         driveMotor.restoreFactoryDefaults();
@@ -163,21 +160,10 @@ public class SwerveModule {
         lastAngle = angle;
     }
 
-    /*public void setDesiredState(SwerveModuleState state){
-
-        if(Math.abs(state.speedMetersPerSecond) < 0.001){
-            stop();
-            return;
-        }
-
-        state = RevModuleOptimizer.optimize(state, getState().angle);
-        driveMotor.set(state.speedMetersPerSecond 
-        / DriveConstants.kPhysicalMaxSpeedMetersPerSecond);//Check when the swerve chassis is done
-        turnMotor.set(turnController.calculate(turningDeegreesToRadians(), state.angle.getRadians()));
-
-        SmartDashboard.putString(
-            "Swerve [" + moduleNumber + "] state", state.toString());
-    }*/
+    public void lockModule(){
+        double targetAngle = -45;
+        turnMotor.set(turnController.calculate(targetAngle));
+    }
 
     public SwerveModulePosition getPosition(){
         return new SwerveModulePosition(
@@ -188,5 +174,11 @@ public class SwerveModule {
     public void stop(){
         driveMotor.set(0);
         turnMotor.set(0);
+    }
+
+    //Debug
+    public void tuneModulePID(double speedMtsPerSec){
+        driveController.setReference(speedMtsPerSec, ControlType.kVelocity, 
+            0, feedForward.calculate(speedMtsPerSec));
     }
 }

@@ -114,7 +114,7 @@
             {
               "type": "named",
               "data": {
-                "name": "IntakeDown"
+                "name": "ArmIntake"
               }
             }
           ]
@@ -131,7 +131,7 @@
             {
               "type": "named",
               "data": {
-                "name": "IdleIntake"
+                "name": "ArmIdle"
               }
             }
           ]

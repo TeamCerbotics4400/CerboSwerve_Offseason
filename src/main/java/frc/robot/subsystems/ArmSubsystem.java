@@ -62,7 +62,7 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
 
     m_encoder.setDistancePerRotation(-360.0);
 
-    m_encoder.reset();
+    //m_encoder.reset();
 
     setGoal(90.3);
   }
@@ -89,6 +89,8 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
   @Override
   public double getMeasurement() {
     // Return the process variable measurement here
+    //TODO: Always intialize the arm upright to apply this offset
+    //Initializing arm from any other position will give other measruments
     return m_encoder.getDistance() + 47;// + 406; //- 226.5;
   }
 

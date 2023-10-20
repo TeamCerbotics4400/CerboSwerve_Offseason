@@ -4,10 +4,12 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -18,7 +20,10 @@ import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.WristConstants;
 import frc.robot.commands.StateIntake;
 import frc.robot.commands.StateShooterCommand;
-import frc.robot.commands.DebugCommands.DebugShooterCommand;
+import frc.robot.commands.AutoCommands.ArmIntake;
+import frc.robot.commands.AutoCommands.ArmShoot;
+import frc.robot.commands.AutoCommands.IdleArm;
+//import frc.robot.commands.DebugCommands.PIDModuleTuner;
 import frc.robot.commands.TeleopCommands.TeleopControl;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrain;
@@ -49,18 +54,28 @@ public class RobotContainer {
   private final SendableChooser<String> m_autoChooser = new SendableChooser<>();
   private final String m_DefaultAuto = "NO AUTO";
   private String m_selectedAuto;
-  private final String[] m_autoNames = {"NO AUTO", "DRIVE TUNER", "ROTATION TUNER", 
-  "DRIVE AND ROTATION TEST"};
+  private final String[] m_autoNames = {"NO AUTO", "DRIVE TUNER", "ROTATION TUNER"};
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
+    m_autoChooser.setDefaultOption("No Auto", m_DefaultAuto);
+    m_autoChooser.addOption("Drive Tuner", m_autoNames[1]);
+    m_autoChooser.addOption("Rotation Tuner", m_autoNames[2]);
+    
+    SmartDashboard.putData("Auto Choices", m_autoChooser);
+
+    NamedCommands.registerCommand("ArmIdle", new IdleArm(m_arm, m_wrist));
+    NamedCommands.registerCommand("ArmIntake", new ArmIntake(m_arm, m_wrist, m_shooter));
+    NamedCommands.registerCommand("ArmShoot", 
+                                          new ArmShoot(m_arm, m_wrist, m_shooter, m_selector));
+
 
     m_drive.setDefaultCommand(new TeleopControl
     (m_drive, 
-    () -> -chassisDriver.getRawAxis(0), 
     () -> chassisDriver.getRawAxis(1), 
-    () -> chassisDriver.getRawAxis(4), 
+    () -> chassisDriver.getRawAxis(0), 
+    () -> -chassisDriver.getRawAxis(4), 
     () -> !chassisDriver.getRawButton(4)));
 
     configureBindings();
@@ -124,8 +139,10 @@ public class RobotContainer {
    new JoystickButton(subsystemsDriver, 2).toggleOnTrue(
     new InstantCommand(() -> StateMachines.setIntakeIdle()));
 
-   //DEBUG
+   /**********  DEBUGGING  **********/
    //new JoystickButton(chassisDriver, 1).whileTrue(new DebugShooterCommand(m_shooter));
+
+   //new JoystickButton(chassisDriver, 2).whileTrue(new PIDModuleTuner(m_drive));
   }
 
   /**
@@ -146,19 +163,15 @@ public class RobotContainer {
       break;
       
       case "DRIVE TUNER":
-        autoSelected = "DriveTuning";
+        autoSelected = "DrivePID";
       break;
       
       case "ROTATION TUNER":
-        autoSelected = "RotationTuning";
+        autoSelected = "RotationPID";
       break;
-      
-      case "DRIVE AND ROTATION TEST":
-        autoSelected = "DriveAndRotate";
-      break;  
     }
 
-    return new PathPlannerAuto(autoSelected);
+    return new PathPlannerAuto("DrivePID");
   }
 
   public DriveTrain getDrive(){

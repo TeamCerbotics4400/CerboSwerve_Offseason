@@ -14,7 +14,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -37,13 +36,14 @@ public class DriveTrain extends SubsystemBase {
 
   private final Pigeon2 imu = new Pigeon2(DriveConstants.IMU_ID);
 
-  private VisionSubsystem m_vision = new VisionSubsystem(this);
+  private VisionSubsystem m_vision = new VisionSubsystem(this); 
 
-  private SwerveDriveOdometry encoderOdo = 
+  //Just in case :)
+  /*private SwerveDriveOdometry encoderOdo = 
   new SwerveDriveOdometry(
     DriveConstants.kSwerveKinematics, 
     getRotation2d(), 
-    getModulePositions());
+    getModulePositions());*/
 
   /** Creates a new DriveTrain. */
   public DriveTrain() {
@@ -58,7 +58,7 @@ public class DriveTrain extends SubsystemBase {
       () -> m_vision.estimatedPose2d(),
       this::resetOdometryPose, 
       () -> getRobotRelativeSpeeds(), 
-      null, 
+      this::setRobotRelativeSpeeds, 
       new HolonomicPathFollowerConfig(
         new PIDConstants(
           DriveConstants.traslationP, 
@@ -81,10 +81,20 @@ public class DriveTrain extends SubsystemBase {
       swerveModules[mod.moduleNumber].getAngleDeegrees());
     }
 
+    for(SwerveModule mod: swerveModules){
+      SmartDashboard.putNumber("Module [" + mod.moduleNumber + "] Velocity",
+       swerveModules[mod.moduleNumber].getDriveVelocity());
+    }
+
     /*for(SwerveModule mod : swerveModules){
       SmartDashboard.putNumber("Module [" + mod.moduleNumber + "] Absolute Volts", 
       swerveModules[mod.moduleNumber].getRawAbsoluteVolts());
     }*/
+
+    SmartDashboard.putNumber("Odometry X", m_vision.estimatedPose2d().getX());
+    SmartDashboard.putNumber("Odometry Y", m_vision.estimatedPose2d().getY());
+    SmartDashboard.putNumber("Odometry Rotation", 
+                            m_vision.estimatedPose2d().getRotation().getDegrees());
 
     SmartDashboard.putNumber("IMU Angle", getHeading());  
   
@@ -139,15 +149,19 @@ public class DriveTrain extends SubsystemBase {
     return positions;
   }
 
+  public void lockWheels(){
+    for(SwerveModule mod : swerveModules){
+      mod.lockModule();
+    }
+  }
+
   public ChassisSpeeds getRobotRelativeSpeeds(){
     return DriveConstants.kSwerveKinematics.toChassisSpeeds(getModuleStates());
   }
 
-  public void setRobotRelativeSpeeds(double x, double y, double theta){
-    ChassisSpeeds chassisSpeeds = new ChassisSpeeds(x, y, theta);
-
+  public void setRobotRelativeSpeeds(ChassisSpeeds speeds){
     SwerveModuleState[] moduleStates = 
-    DriveConstants.kSwerveKinematics.toSwerveModuleStates(chassisSpeeds);
+    DriveConstants.kSwerveKinematics.toSwerveModuleStates(speeds);
 
     setModuleStates(moduleStates, false);
   }
@@ -158,5 +172,12 @@ public class DriveTrain extends SubsystemBase {
   
   public void resetOdometryPose(Pose2d pose){
     m_vision.resetPoseEstimator(pose);
+  }
+
+  //Debug
+  public void tuneDrivePID(double speedMtsPerSec){
+    for(SwerveModule mod : swerveModules){
+      mod.tuneModulePID(speedMtsPerSec);
+    }
   }
 }

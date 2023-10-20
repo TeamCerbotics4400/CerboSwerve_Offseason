@@ -4,9 +4,11 @@
   "holonomicMode": true,
   "pathFolders": [
     "Full circuit paths",
+    "Drive Tuning",
     "Swerve auto testing"
   ],
   "autoFolders": [
+    "PIDTuner",
     "Swerve Testing"
   ]
 }

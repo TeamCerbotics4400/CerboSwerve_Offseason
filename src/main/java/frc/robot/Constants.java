@@ -27,6 +27,8 @@ import team4400.Util.Swerve.SwerveModuleConstants;
  */
 
 public final class Constants {
+  public static boolean needToLog = true;
+
   public static final class ModuleConstants{
     public static final double kWheelDiameterMeters = Units.inchesToMeters(4);
     public static final double kDriveMotorGearRatio = 1 / 5.50; //Drive Gear Ratio, 5.50 or 6.55
@@ -34,15 +36,14 @@ public final class Constants {
     public static final double kDriveEncoderRot2Meter = 
                                 kDriveMotorGearRatio * Math.PI * kWheelDiameterMeters;
     public static final double kDriveEncoderRPM2MeterPerSec = kDriveEncoderRot2Meter / 60;
-    public static final double kP = 0,
+    public static final double kP = 3.684E-07,
                                kI = 0,
                                kD = 0,
-                               kFF = 0,
-                               kS = 0,
-                               kV = 0,
-                               kA = 0;
-    public static final double kPTurning = 0.5;//0.096172; 
-    //public static final double kDTurning = 0.0046987;
+                               kFF = 0.162,
+                               kS = 0.14432,
+                               kV = 0.22481,
+                               kA = 0.0068459;
+    public static final double kPTurning = 0.5;
   }
 
   public static final class DriveConstants{
@@ -73,61 +74,56 @@ public final class Constants {
      */
 
      //Offsets are different in each robot and encoder;
-
     public static final class Module0{
       public static final int DRIVE_ID = 16;
       public static final int TURN_ID = 17;
-      public static final boolean driveReversed = false;
+      public static final boolean driveReversed = true;
       public static final boolean turnReversed = true;
       public static final int ABSOLUTE_ID = 3; 
-      public static final boolean encoderReversed = false;
-      public static double encoderOffset = -163.20;
+      public static double encoderOffset = -163.20 - 90;
 
       public static final SwerveModuleConstants CONSTANTS = 
       new SwerveModuleConstants(DRIVE_ID, TURN_ID, driveReversed, 
-      turnReversed, ABSOLUTE_ID, encoderReversed, encoderOffset);
+      turnReversed, ABSOLUTE_ID, encoderOffset);
     }
 
     public static final class Module1{
       public static final int DRIVE_ID = 4;
       public static final int TURN_ID = 3;
-      public static final boolean driveReversed = false;
+      public static final boolean driveReversed = true;
       public static final boolean turnReversed = true;
       public static final int ABSOLUTE_ID = 2;
-      public static final boolean encoderReversed = false;
-      public static double encoderOffset = 152.60;
+      public static double encoderOffset = 152.60 - 90;
 
       public static final SwerveModuleConstants CONSTANTS = 
       new SwerveModuleConstants(DRIVE_ID, TURN_ID, driveReversed, 
-      turnReversed, ABSOLUTE_ID, encoderReversed, encoderOffset);
+      turnReversed, ABSOLUTE_ID, encoderOffset);
     }
 
     public static final class Module2{
       public static final int DRIVE_ID = 2;
       public static final int TURN_ID = 1;
-      public static final boolean driveReversed = true;
+      public static final boolean driveReversed = false;
       public static final boolean turnReversed = true;
       public static final int ABSOLUTE_ID = 0;
-      public static final boolean encoderReversed = false;
-      public static double encoderOffset = 103.25;
+      public static double encoderOffset = 103.25 - 90;
 
       public static final SwerveModuleConstants CONSTANTS = 
       new SwerveModuleConstants(DRIVE_ID, TURN_ID, driveReversed, 
-      turnReversed, ABSOLUTE_ID, encoderReversed, encoderOffset);
+      turnReversed, ABSOLUTE_ID, encoderOffset);
     }
 
     public static final class Module3{
       public static final int DRIVE_ID = 18;
       public static final int TURN_ID = 19;
-      public static final boolean driveReversed = true;
+      public static final boolean driveReversed = false;
       public static final boolean turnReversed = true;
       public static final int ABSOLUTE_ID = 1;
-      public static final boolean encoderReversed = false;
-      public static double encoderOffset = -90.5;
+      public static double encoderOffset = -90.5 - 90;
 
       public static final SwerveModuleConstants CONSTANTS = 
       new SwerveModuleConstants(DRIVE_ID, TURN_ID, driveReversed, 
-      turnReversed, ABSOLUTE_ID, encoderReversed, encoderOffset);
+      turnReversed, ABSOLUTE_ID, encoderOffset);
     }
 
     public static final int IMU_ID = 13;
@@ -138,10 +134,10 @@ public final class Constants {
     public static final double kWheelBase = 0.6604;
   
     public static final SwerveDriveKinematics kSwerveKinematics = new SwerveDriveKinematics(
+      new Translation2d(kWheelBase / 2, kTrackWidth / 2),
       new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
       new Translation2d(-kWheelBase / 2, -kTrackWidth / 2),
-      new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
-      new Translation2d(kWheelBase / 2, kTrackWidth / 2 ));
+      new Translation2d(-kWheelBase / 2, kTrackWidth / 2 ));
 
       /*
        * Kinematics order:

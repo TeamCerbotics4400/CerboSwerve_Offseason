@@ -151,10 +151,10 @@ public class FalconShooter extends SubsystemBase {
     return falconDesiredVelo;
   }
 
-  private boolean isOnTarget() {
+  /*private boolean isOnTarget() {
     double rpmDifference = getTargetVelo() - getAverageRPM();
     return Math.abs(rpmDifference) <= ShooterConstants.shooterTreshold;
-  }
+  }*/
 
   /*public boolean isOnTarget(){
     double rpmDifference = getTargetVelo() - getAverageRPM();
